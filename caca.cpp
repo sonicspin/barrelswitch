@@ -62,20 +62,27 @@ int main() {
 						{ 4, 4, 4, 1, 2, 2, 2, 1, 5 },
 						{ 4, 4, 4, 1, 1, 1, 1, 1, 7 },
 				}, {
-						{1,1,1,1,1,1,5},
-						{1,2,2,2,2,1,1,1,1,1,4,4,4,1,1,1,1,1,5},
-						{1,2,2,2,2,2,2,2,2,1,1,1,1,1,2,2,2,1,5},
-						{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,5},
-						{1,2,2,2,2,2,2,2,2,1,1,1,1,1,2,2,2,1,5},
-						{1,2,2,2,2,1,1,1,1,1,4,4,4,1,2,2,2,1,5},
-						{1,1,1,1,1,1,4,4,4,4,4,4,4,1,2,2,2,1,5},
-						{4,4,4,4,4,4,1,1,1,1,1,1,1,1,2,2,2,1,5},
-						{4,4,4,4,4,4,1,2,2,2,2,2,2,2,2,2,2,1,5},
-						{4,4,4,4,4,4,1,1,1,1,1,1,1,1,2,2,2,1,5},
-						{4,4,4,4,4,4,4,4,4,4,4,4,4,1,2,2,2,1,5},
-						{4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,2,1,1,5},
-						{4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,2,1,5}
-				}
+						{ 1, 1, 1, 1, 1, 1, 5 },
+						{ 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 4, 4, 4, 1, 1, 1, 1, 1, 5 },
+						{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 5 },
+						{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 5 },
+						{ 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 5 },
+						{ 1, 2, 2, 2, 2, 1, 1, 1, 1, 1, 4, 4, 4, 1, 2, 2, 2, 1, 5 },
+						{ 1, 1, 1, 1, 1, 1, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 2, 1, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 1, 1, 1, 1, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 3, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
+						{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 7 }
+				} 
 		};
 	int spawnpoint[3][2] = {
 			{ 2, 5 },
@@ -89,17 +96,17 @@ int main() {
 	}
 	barrelspawn,switchspawn,playerspawn,specspawn;
 	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; playerspawn.xcoord[3] = 2; //SPAM
-	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; playerspawn.ycoord[2] = 3; //SHARE THE SPAM
-	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; //SPAM THE WORLD
-	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; //JUS SPAM IT
-	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; //ALL IN SPAM
-	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; // 100% SPAM FREE
-	specspawn.xcoord[0] = 0; specspawn.xcoord[1] = 0; specspawn.xcoord[2] = 0; //THAT WAS PURE SPAMMING SATISFACTION
-	specspawn.ycoord[0] = 0; specspawn.ycoord[1] = 0; specspawn.ycoord[2] = 0; //WE NEED TO GO SPAMMER
+	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; playerspawn.ycoord[3] = 3; //SHARE THE SPAM
+	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; barrelspawn.xcoord[3] = 15; //SPAM THE WORLD
+	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; barrelspawn.ycoord[3] = 2;//JUST SPAM IT
+	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; switchspawn.xcoord[3] = 7; //ALL IN SPAM
+	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; switchspawn.ycoord[3] = 8; // 100% SPAM FREE
+	specspawn.xcoord[0] = 0; specspawn.xcoord[1] = 0; specspawn.xcoord[2] = 0; specspawn.xcoord[3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
+	specspawn.ycoord[0] = 0; specspawn.ycoord[1] = 0; specspawn.ycoord[2] = 0; specspawn.ycoord[3] = 13; //WE NEED TO GO SPAMMER
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
-	int level = 0;
+	int level = 3;
 	int xarraychecker = 0, yarraychecker = 0;
 	/*bcoords = barrel carriers
 	  scoords = switch carriers
@@ -124,36 +131,36 @@ int main() {
 		while (sparker == true){
 			if (levelindicator == false){
 				cout << "you are in level " << level + 1 << endl;
-				levelindicator = true;
-			}
+				levelindicator = true;}
+			if (tiles[level][ycord][xcord] == 3){
+				cout << "you're on a staircase! write \"q\" to go up a level!" << endl;}
+			if (switchspawn.is_active){
+				specspawn.is_active = true;}
 			char movementinput = 0;
 			bool tilesparker = true;
 			int xchecker = xcord;
 			int ychecker = ycord;
-			if (tiles[level][ycord][xcord] == 3){
-				cout << "you're on a staircase! write \"q\" to go up a level!" << endl;
-			}
 			//renderer
 			while (tilesparker == true){
-				if (bxcoord != 0){ if (xarraychecker == bxcoord && yarraychecker == bycoord){
+				if (!bxcoord){ if (xarraychecker == bxcoord && yarraychecker == bycoord){
 					cout << "O";
-					xarraychecker += 1;
+					xarraychecker = xarraychecker + 1;
 				}
 				}
-				else if (sxcoord != 0){if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
+				else if (!sxcoord){if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
 						cout << "S";
-						xarraychecker += 1;
+						xarraychecker = xarraychecker +1;
 				}
-				else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && specspawn.is_active){
+				else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && switchspawn.is_active){
 					cout << "O";
 				}}
-				else if (spxcoord != 0){ if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
+				else if (!spxcoord){ if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
 						cout << "E";
-						xarraychecker += 1;
+						xarraychecker = xarraychecker + 1;
 					}
 				else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active){
 						cout << ",";
-						xarraychecker += 1;
+						xarraychecker = xarraychecker +1;
 					}
 				}
                   else if (yarraychecker == ycord && xarraychecker == xcord){
