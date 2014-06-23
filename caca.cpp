@@ -83,6 +83,9 @@ int main() {
 			{0,0},
 			{0,0}
 	};
+	struct moving_stuff{
+		int coord[][];
+	}
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
@@ -96,10 +99,12 @@ int main() {
 		}
 		int xcord = spawnpoint[level][0];
 		int ycord = spawnpoint[level][1];
+		int bxcord = barrelspawn[level][0];
+		int bycord = barrelspawn[level][1]
 		sparker = true;
 		while (sparker == true){
 			if (levelindicator == false){
-				cout << "you are in level " << level << endl;
+				cout << "you are in level " << level + 1 << endl;
 				levelindicator = true;
 			}
 			char movementinput = 0;
