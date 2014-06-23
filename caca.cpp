@@ -7,23 +7,61 @@ enum TILENAME{
 	STAIRS = 3,
 	AIRSPC = 4,
 	LINBRK = 5,
-	PLAYER = 6,
 	LVLEND = 7,
 	DYNAMC = 8,
 	HORBRD = 9,
-	BHORBD = 17,
-	UPBRDG = 10,
-	BUPBRD = 18,
+	BHORBD = 10,
+	UPBRDG = 11,
+	BUPBRD = 12,
 };
-int render(int flooring[4][60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky){
+int is_valid(int checkedtile,bool& valid){
+	switch (checkedtile)
+	{
+	case 1:
+		valid = true;
+		break;
+	case 2:
+		valid = true;
+		break;
+	case 3:
+		valid = true;
+		break;
+	case 4:
+		valid = true;
+		break;
+	case 5:
+		valid = true;
+		break;
+	case 7:
+		valid = true;
+		break;
+	case 9:
+		valid = true;
+		break;
+	case 10:
+		valid = true;
+		break;
+	case 11:
+		valid = true;
+		break;
+	case 12:
+		valid = true;
+		break;
+	default:
+		valid = false;
+		break;
+	}
+	return 0;
+}
+int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky,bool& error){
 	bool spark = true;
 	while (spark){
-		if (flooring[lvl][ycheck][xcheck] == AIRSPC){
+		if (flooring[ycheck][xcheck] == AIRSPC){
 			cout << "_";
 			xcheck = xcheck + 1;
 		}
 		else if (ycheck == ycoord && xcheck == xcoord){
-			if (flooring[lvl][ycheck][xcheck] == BUPBRD){
+			if (flooring[ycheck][xcheck] == BUPBRD){
 				cout << "I";
 				xcheck = xcheck + 1;
 			}
@@ -32,35 +70,37 @@ int render(int flooring[4][60][70],int& xcheck, int& ycheck,int xcoord, int ycoo
 				xcheck = xcheck + 1;
 			}
 		}
-		else if (flooring[lvl][ycheck][xcheck] == FLOORT){
+		else if (flooring[ycheck][xcheck] == FLOORT){
 			cout << ",";
 			xcheck = xcheck + 1;
 		}
-		else if (flooring[lvl][ycheck][xcheck] == STAIRS){
+		else if (flooring[ycheck][xcheck] == STAIRS){
 			cout << "L";
 			xcheck = xcheck + 1;
 		} 
-		else if (flooring[lvl][ycheck][xcheck] == LINBRK){
+		else if (flooring[ycheck][xcheck] == LINBRK){
 			cout << endl;
 			xcheck = 0;
 			ycheck = ycheck + 1;
 		}
-		else if (flooring[lvl][ycheck][xcheck] == WALLTL){
+		else if (flooring[ycheck][xcheck] == WALLTL){
 			cout << "E";
 			xcheck = xcheck + 1;
 		}
-		else if (flooring[lvl][ycheck][xcheck] == UPBRDG){
+		else if (flooring[ycheck][xcheck] == UPBRDG){
 			cout << "I";
 			xcheck = xcheck + 1;
 		}
-		else if (flooring[lvl][ycheck][xcheck] == LVLEND){
+		else if (flooring[ycheck][xcheck] == LVLEND){
 			cout << endl;
 			xcheck = 0;
 			ycheck = 0;
 			sparky = false;
 			spark = false;
 		}
-		else{ spark = false; }
+		else{ spark = false;
+		error = true;
+		}
 	}
 	return 0;
 }
@@ -107,7 +147,7 @@ int main() {
 					{ 4, 4, 4, 1, 2, 1, 5 },
 					{ 4, 4, 4, 1, 2, 1, 5 },
 					{ 1, 1, 1, 1, 2, 1, 1, 1, 5 },
-					{ 1, 3, 2, 2, 10, 2, 2, 1, 5 },
+					{ 1, 3, 2, 2, 11, 2, 2, 1, 5 },
 					{ 1, 1, 1, 1, 2, 1, 2, 1, 5 },
 					{ 4, 4, 4, 1, 2, 2, 2, 1, 5 },
 					{ 4, 4, 4, 1, 1, 1, 1, 1, 7 },
@@ -163,7 +203,7 @@ int main() {
 	/*bcoords = barrel carriers
 	  scoords = switch carriers
 	  spcoords = wall carriers */
-	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false;
+	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false,error = false;
 	while (oversparker == true){
 		if (levelcomplete == true){
 			level = level + 1;
@@ -197,8 +237,9 @@ int main() {
 			int ychecker = ycord;
 			//renderer
 			while (tilesparker == true){
-				if (tiles[level][yarraychecker][xarraychecker] == (18 || 1 || 2 || 3 || 4 || 5 || 6 || 7)){
-					render(tiles, xarraychecker, yarraychecker, xcord, ycord, level, tilesparker);
+				is_valid(tiles[level][yarraychecker][xarraychecker],error);
+				if (error == true){
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, error);
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -234,7 +275,7 @@ int main() {
 						}
 					}
 				}
-						else{
+				else if (error == false){
 							cout << "there was an error rendering this, the error tile was "
 								<< tiles[level][yarraychecker][xarraychecker] << endl;
 							tilesparker = false;
@@ -242,6 +283,7 @@ int main() {
 						spcarr = false;
 						scarr = false;
 						bcarr = false;
+						error = false;
 						//end renderer
 				}
 				cin >> movementinput;
