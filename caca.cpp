@@ -66,6 +66,7 @@ int main() {
 						{ 1, 1, 1, 1, 2, 1, 2, 1, 5 },
 						{ 4, 4, 4, 1, 2, 2, 2, 1, 5 },
 						{ 4, 4, 4, 1, 1, 1, 1, 1, 7 },
+				}, {
 				}
 		};
 	int spawnpoint[3][2] = {
@@ -76,26 +77,38 @@ int main() {
 	struct dynamic_stuff{
 		int xcoord[3];
 		int ycoord[3];
-	}barrelspawn,switchspawn,playerspawn;
+	}barrelspawn,switchspawn,playerspawn,specspawn;
 	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; //SPAM
 	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; //SHARE THE SPAM
 	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; //SPAM THE WORLD
 	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; //JUS SPAM IT
 	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; //ALL IN SPAM
 	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; // 100% SPAM FREE
+	specspawn.xcoord[0] = 0; specspawn.xcoord[1] = 0; specspawn.xcoord[2] = 0; //THAT WAS PURE SPAMMING SATISFACTION
+	specspawn.ycoord[0] = 0; specspawn.ycoord[1] = 0; specspawn.ycoord[2] = 0; //WE NEED TO GO SPAMMER
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
 	int level = 0;
 	int xarraychecker = 0, yarraychecker = 0;
+	int bxcoord,bycoord,sxcoord,sycoord,spxcoord,spycoord; 
+	/*bcoords = barrel carriers
+	  scoords = switch carriers
+	  spcoords = wall carriers */
 	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false;
 	while (oversparker == true){
 		if (levelcomplete == true){
 			level = level + 1;
 			levelcomplete = false;
 		}
-		int xcord = spawnpoint[level][0];
-		int ycord = spawnpoint[level][1];
+		int xcord = playerspawn.xcoord[level];
+		int ycord = playerspawn.ycoord[level];
+		int bxcoord = barrelspawn.xcoord[level];
+		int bycoord = barrelspawn.ycoord[level];
+		int sxcoord = switchspawn.xcoord[level];
+		int sycoord = switchspawn.ycoord[level];
+		int spxcoord = specspawn.xcoord[level];
+		int spycoord = specspawn.ycoord[level];
 		sparker = true;
 		while (sparker == true){
 			if (levelindicator == false){
@@ -111,7 +124,11 @@ int main() {
 			}
 			//renderer
 			while (tilesparker == true){
-                  if (yarraychecker == ycord && xarraychecker == xcord){
+				if (bxcoord != 0){ if (xarraychecker == bxcoord && yarraychecker == bycoord){
+					cout << "O";
+					xarraychecker += 1;
+				}}
+                  else if (yarraychecker == ycord && xarraychecker == xcord){
 					if (tiles[level][yarraychecker][xarraychecker] == BUPBRD){
 						cout << "I";
 						xarraychecker = xarraychecker + 1;
@@ -167,14 +184,6 @@ int main() {
 				}
 				//end renderer
 			}
-
-			//movement
-			/*
-			Movement:
-			w         |    a    |    s    |    d
-			Upbridge  |Upbridge |Upbridge |
-			Upledge   |Upledge  |         |
-			*/
 			cin >> movementinput;
 			if (tiles[level][ycord][xcord] == 3 && movementinput == 'q'){
 				levelcomplete = true;
