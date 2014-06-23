@@ -15,42 +15,53 @@ enum TILENAME{
 	UPBRDG = 10,
 	BUPBRD = 18,
 };
-int render(int flooring[4][60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl){
-	if (ycheck == ycoord && xcheck == xcoord){
-		if (flooring[lvl][ycheck][xcheck] == BUPBRD){
+int render(int flooring[4][60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky){
+	bool spark = true;
+	while (spark){
+		if (flooring[lvl][ycheck][xcheck] == AIRSPC){
+			cout << "_";
+			xcheck = xcheck + 1;
+		}
+		else if (ycheck == ycoord && xcheck == xcoord){
+			if (flooring[lvl][ycheck][xcheck] == BUPBRD){
+				cout << "I";
+				xcheck = xcheck + 1;
+			}
+			else{
+				cout << "@";
+				xcheck = xcheck + 1;
+			}
+		}
+		else if (flooring[lvl][ycheck][xcheck] == FLOORT){
+			cout << ",";
+			xcheck = xcheck + 1;
+		}
+		else if (flooring[lvl][ycheck][xcheck] == STAIRS){
+			cout << "L";
+			xcheck = xcheck + 1;
+		} 
+		else if (flooring[lvl][ycheck][xcheck] == LINBRK){
+			cout << endl;
+			xcheck = 0;
+			ycheck = ycheck + 1;
+		}
+		else if (flooring[lvl][ycheck][xcheck] == WALLTL){
+			cout << "E";
+			xcheck = xcheck + 1;
+		}
+		else if (flooring[lvl][ycheck][xcheck] == UPBRDG){
 			cout << "I";
 			xcheck = xcheck + 1;
 		}
-		else{
-			cout << "@";
-			xcheck = xcheck + 1;
+		else if (flooring[lvl][ycheck][xcheck] == LVLEND){
+			cout << endl;
+			xcheck = 0;
+			ycheck = 0;
+			sparky = false;
+			spark = false;
 		}
+		else{ spark = false; }
 	}
-	else if (flooring[lvl][ycheck][xcheck] == FLOORT){
-		cout << ",";
-		xcheck = xcheck + 1;
-	}
-	else if (flooring[lvl][ycheck][xcheck] == STAIRS){
-		cout << "L";
-		xcheck = xcheck + 1;
-	}
-	else if (flooring[lvl][ycheck][xcheck] == AIRSPC){
-		cout << "_";
-		xcheck = xcheck + 1;
-	}
-	else if (flooring[lvl][ycheck][xcheck] == LINBRK){
-		cout << endl;
-		xcheck = 0;
-		ycheck = ycheck + 1;
-	}
-	else if (flooring[lvl][ycheck][xcheck] == WALLTL){
-		cout << "E";
-		xcheck = xcheck + 1;
-	}
-	else if (flooring[lvl][ycheck][xcheck] == UPBRDG){
-		cout << "I";
-		xcheck = xcheck + 1;
-	} else{}
 	return 0;
 }
 int mov(int& coord, int movcoord, int checktile){
@@ -186,164 +197,158 @@ int main() {
 			int ychecker = ycord;
 			//renderer
 			while (tilesparker == true){
-				render(tiles, xarraychecker, yarraychecker,xcord,ycord, level);
-				if (tiles[level][yarraychecker][xarraychecker] = DYNAMC){
-					if (b2car && s2car && sp2car == false){
-						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							cout << "O";
+				if (tiles[level][yarraychecker][xarraychecker] == (18 || 1 || 2 || 3 || 4 || 5 || 6 || 7)){
+					render(tiles, xarraychecker, yarraychecker, xcord, ycord, level, tilesparker);
+				}
+				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
+					if (xarraychecker == bxcoord && yarraychecker == bycoord){
+						cout << "O";
+						xarraychecker = xarraychecker + 1;
+						bcarr = true; b2car = true;
+					}
+					else if (!sxcoord){
+						if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
+							cout << "S";
 							xarraychecker = xarraychecker + 1;
-							bcarr = true; b2car = true;
+							scarr = true;
+							s2car = true;
 						}
-						else if (!sxcoord){
-							if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
-								cout << "S";
-								xarraychecker = xarraychecker + 1;
-								scarr = true;
-								s2car = true;
-							}
-							else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && switchspawn.is_active){
-								cout << "O";
-								scarr = true;
-								s2car = true;
-							}
+						else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && switchspawn.is_active){
+							cout << "O";
+							scarr = true;
+							s2car = true;
 						}
-						else if (!spxcoord){
-							if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
-								cout << "E";
-								xarraychecker = xarraychecker + 1;
-								spcarr = true;
-								sp2car = true;
-							}
-							else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active){
-								cout << ",";
-								xarraychecker = xarraychecker + 1;
-								spcarr = true;
-								sp2car = true;
-							}
+					}
+					else if (!spxcoord){
+						if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
+							cout << "E";
+							xarraychecker = xarraychecker + 1;
+							spcarr = true;
+							sp2car = true;
+						}
+						else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active){
+							cout << ",";
+							xarraychecker = xarraychecker + 1;
+							spcarr = true;
+							sp2car = true;
 						}
 					}
 				}
-				else if (tiles[level][yarraychecker][xarraychecker] == LVLEND){
-					cout << endl;
-					xarraychecker = 0;
-					yarraychecker = 0;
-					tilesparker = false;
+						else{
+							cout << "there was an error rendering this, the error tile was "
+								<< tiles[level][yarraychecker][xarraychecker] << endl;
+							tilesparker = false;
+						}
+						spcarr = false;
+						scarr = false;
+						bcarr = false;
+						//end renderer
+				}
+				cin >> movementinput;
+				if (tiles[level][ycord][xcord] == 3 && movementinput == 'q'){
+					levelcomplete = true;
+					levelindicator = false;
+					sparker = false;
+				}
+				else if (tiles[level][ycord][xcord] == UPBRDG){
+					if (movementinput == 'd'){
+						cout << "you can't do that!" << endl;
+					}
+					if (movementinput == 'w'){
+						ychecker = ychecker - 1;
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord - 1;
+							ychecker = ycord;
+						}
+					}
+					else if (movementinput == 's'){
+						ychecker = ychecker + 1;
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord + 1;
+							ychecker = ycord;
+						}
+					}
+
+					else if (movementinput == 'a'){
+						cout << "you can't do that!" << endl;
+					}
+				}
+				else if (tiles[level][ycord][xcord] == BUPBRD){
+					if (movementinput == 'd'){
+						xchecker = xchecker + 1;
+						tiles[level][ycord][xcord] = UPBRDG;
+						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							xcord = xcord + 1;
+							tiles[level][ychecker][xchecker] = BUPBRD;
+							xchecker = xcord;
+						}
+					}
+					else if (movementinput == 'w'){
+						cout << "you can't do that!" << endl;
+						ychecker = ycord;
+					}
+					else if (movementinput == 's'){
+						cout << "you can't do that!" << endl;
+						ychecker = ycord;
+					}
+
+					else if (movementinput == 'a'){
+						xchecker = xchecker - 1;
+						tiles[level][ycord][xcord] = UPBRDG;
+						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							xcord = xcord - 1;
+							tiles[level][ychecker][xchecker] = BUPBRD;
+							xchecker = xcord;
+						}
+					}
 				}
 				else{
-					cout << "there was an error rendering this, the error tile was "
-						<< tiles[level][yarraychecker][xarraychecker] << endl;
-					tilesparker = false;
-				}
-				spcarr = false;
-				scarr = false;
-				bcarr = false;
-				//end renderer
-			}
-			cin >> movementinput;
-			if (tiles[level][ycord][xcord] == 3 && movementinput == 'q'){
-				levelcomplete = true;
-				levelindicator = false;
-				sparker = false;
-			}
-			else if (tiles[level][ycord][xcord] == UPBRDG){
-				if (movementinput == 'd'){
-					cout << "you can't do that!" << endl;
-				}
-				if (movementinput == 'w'){
-					ychecker = ychecker - 1;
-					mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						ycord = ycord - 1;
-						ychecker = ycord;
+					if (movementinput == 'd'){
+						xchecker = xchecker + 1;
+						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							xcord = xcord + 1;
+							tiles[level][ychecker][xchecker] = BUPBRD;
+							xchecker = xcord;
+						}
 					}
-				}
-				else if (movementinput == 's'){
-					ychecker = ychecker + 1;
-					mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						ycord = ycord + 1;
-						ychecker = ycord;
+					else if (movementinput == 'w'){
+						ychecker = ychecker - 1;
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord - 1;
+							ychecker = ycord;
+						}
 					}
-				}
+					else if (movementinput == 's'){
+						ychecker = ychecker + 1;
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord + 1;
+							ychecker = ycord;
+						}
 
-				else if (movementinput == 'a'){
-					cout << "you can't do that!" << endl;
+					}
+					else if (movementinput == 'a'){
+						xchecker = xchecker - 1;
+						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
+						if (tiles[level][ychecker][xchecker] == UPBRDG){
+							xcord = xcord - 1;
+							tiles[level][ychecker][xchecker] = BUPBRD;
+							xchecker = xcord;
+						}
+						//a move layer
+					}
+					//bridge/non bridge movement layer
 				}
+				//general movement
 			}
-			else if (tiles[level][ycord][xcord] == BUPBRD){
-				if (movementinput == 'd'){
-					xchecker = xchecker + 1;
-					tiles[level][ycord][xcord] = UPBRDG;
-					mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						xcord = xcord + 1;
-						tiles[level][ychecker][xchecker] = BUPBRD;
-						xchecker = xcord;
-					}
-				}
-				else if (movementinput == 'w'){
-					cout << "you can't do that!" << endl;
-					ychecker = ycord;
-				}
-				else if (movementinput == 's'){
-					cout << "you can't do that!" << endl;
-					ychecker = ycord;
-				}
-
-				else if (movementinput == 'a'){
-					xchecker = xchecker - 1;
-					tiles[level][ycord][xcord] = UPBRDG;
-					mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						xcord = xcord - 1;
-						tiles[level][ychecker][xchecker] = BUPBRD;
-						xchecker = xcord;
-					}
-				}
-			}
-			else{
-				if (movementinput == 'd'){
-					xchecker = xchecker + 1;
-					mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						xcord = xcord + 1;
-						tiles[level][ychecker][xchecker] = BUPBRD;
-						xchecker = xcord;
-					}
-				}
-				else if (movementinput == 'w'){
-					ychecker = ychecker - 1;
-					mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						ycord = ycord - 1;
-						ychecker = ycord;
-					}
-				}
-				else if (movementinput == 's'){
-					ychecker = ychecker + 1;
-					mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						ycord = ycord + 1;
-						ychecker = ycord;
-					}
-
-				}
-				else if (movementinput == 'a'){
-					xchecker = xchecker - 1;
-					mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPBRDG){
-						xcord = xcord - 1;
-						tiles[level][ychecker][xchecker] = BUPBRD;
-						xchecker = xcord;
-					}
-					//a move layer
-				}
-				//bridge/non bridge movement layer
-			}
-			//general movement
+			//sparker layer
 		}
-		//sparker layer
-	}
-	//oversparker layer
-} //too many layers of indentation @_@
+		//oversparker layer
+	} //too many layers of indentation @_@
 //main() layer
