@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <fstream>
 using namespace std;
 int mov(int& coord, int movcoord,int checktile){
 	if (checktile == 1){
@@ -32,10 +31,6 @@ int main() {
 		BHORBD = 17,
 		UPBRDG = 10,
 		BUPBRD = 18,
-		LFTLED = 11,
-		RGTLED = 12,
-		DWNLED = 13,
-		UPLDGE = 14,
 	};
 	int	tiles[4][60][70] = {
 				{
@@ -59,14 +54,21 @@ int main() {
 				}, {
 						{ 4, 4, 4, 1, 1, 1, 5 },
 						{ 4, 4, 4, 1, 2, 1, 5 },
-						{ 4, 4, 4, 1, 14, 1, 5 },
+						{ 4, 4, 4, 1, 2, 1, 5 },
 						{ 4, 4, 4, 1, 2, 1, 5 },
 						{ 1, 1, 1, 1, 2, 1, 1, 1, 5 },
-						{ 1, 3, 2, 2, 10, 2, 2, 1, 5 },
+						{ 1, 3, 2, 2,10, 2, 2, 1, 5 },
 						{ 1, 1, 1, 1, 2, 1, 2, 1, 5 },
 						{ 4, 4, 4, 1, 2, 2, 2, 1, 5 },
 						{ 4, 4, 4, 1, 1, 1, 1, 1, 7 },
 				}, {
+						{1,1,1,1,1,1,5},
+						{1,2,2,2,2,1,1,1,1,1,4,4,4,1,1,1,1,1,5},
+						{1,2,2,2,2,2,2,2,2,1,1,1,1,1,2,2,2,1,5},
+						{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,5},
+						{1,2,2,2,2,2,2,2,2,1,1,1,1,1,2,2,2,1,5},
+						{1,2,2,2,2,1,1,1,1,1,4,4,4,1,2,2,2,1,5},
+						{1,1,1,1,1,1,4,4,4,4,4,4,4,1,2,2,2,1,5},
 				}
 		};
 	int spawnpoint[3][2] = {
@@ -75,11 +77,13 @@ int main() {
 			{ 4, 1 }
 	};
 	struct dynamic_stuff{
-		int xcoord[3];
-		int ycoord[3];
-	}barrelspawn,switchspawn,playerspawn,specspawn;
-	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; //SPAM
-	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; //SHARE THE SPAM
+		int xcoord[4];
+		int ycoord[4];
+		bool is_active;
+	}
+	barrelspawn,switchspawn,playerspawn,specspawn;
+	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; playerspawn.xcoord[3] = 2; //SPAM
+	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; playerspawn.ycoord[2] = 3; //SHARE THE SPAM
 	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; //SPAM THE WORLD
 	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; //JUS SPAM IT
 	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; //ALL IN SPAM
@@ -91,7 +95,6 @@ int main() {
 	cout << "WASD to move!" << endl;
 	int level = 0;
 	int xarraychecker = 0, yarraychecker = 0;
-	int bxcoord,bycoord,sxcoord,sycoord,spxcoord,spycoord; 
 	/*bcoords = barrel carriers
 	  scoords = switch carriers
 	  spcoords = wall carriers */
@@ -109,6 +112,8 @@ int main() {
 		int sycoord = switchspawn.ycoord[level];
 		int spxcoord = specspawn.xcoord[level];
 		int spycoord = specspawn.ycoord[level];
+		specspawn.is_active = false;
+		switchspawn.is_active = false;
 		sparker = true;
 		while (sparker == true){
 			if (levelindicator == false){
@@ -127,7 +132,24 @@ int main() {
 				if (bxcoord != 0){ if (xarraychecker == bxcoord && yarraychecker == bycoord){
 					cout << "O";
 					xarraychecker += 1;
+				}
+				}
+				else if (sxcoord != 0){if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
+						cout << "S";
+						xarraychecker += 1;
+				}
+				else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && specspawn.is_active){
+					cout << "O";
 				}}
+				else if (spxcoord != 0){ if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
+						cout << "E";
+						xarraychecker += 1;
+					}
+				else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active){
+						cout << ",";
+						xarraychecker += 1;
+					}
+				}
                   else if (yarraychecker == ycord && xarraychecker == xcord){
 					if (tiles[level][yarraychecker][xarraychecker] == BUPBRD){
 						cout << "I";
@@ -159,16 +181,8 @@ int main() {
 					cout << "E";
 					xarraychecker = xarraychecker + 1;
 				}
-				else if (tiles[level][yarraychecker][xarraychecker] == UPLDGE){
-					cout << "v";
-					xarraychecker = xarraychecker + 1;
-				}
 				else if (tiles[level][yarraychecker][xarraychecker] == UPBRDG){
 					cout << "I";
-					xarraychecker = xarraychecker + 1;
-				}
-				else if (tiles[level][yarraychecker][xarraychecker] == DWNLED){
-					cout << "*";
 					xarraychecker = xarraychecker + 1;
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == LVLEND){
@@ -201,18 +215,11 @@ int main() {
 						ycord = ycord - 1;
 						ychecker = ycord;
 					}
-					else if (tiles[level][ychecker][xchecker] == UPLDGE){
-						cout << "you can't do that" << endl;
-					}
 				}
 				else if (movementinput == 's'){
 					ychecker = ychecker + 1;
 					mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-					if (tiles[level][ychecker][xchecker] == UPLDGE){
-						ycord = ycord + 1;
-						ychecker = ycord;
-					}
-					else if (tiles[level][ychecker][xchecker] == UPBRDG){
+                    if (tiles[level][ychecker][xchecker] == UPBRDG){
 						ycord = ycord + 1;
 						ychecker = ycord;
 					}
@@ -232,11 +239,6 @@ int main() {
 						tiles[level][ychecker][xchecker] = BUPBRD;
 						xchecker = xcord;
 					}
-					else if (tiles[level][ychecker][xchecker] == UPLDGE){
-						xcord = xcord + 1;
-						xchecker = xcord;
-					}
-
 				}
 				else if (movementinput == 'w'){
 					cout << "you can't do that!" << endl;
@@ -256,10 +258,6 @@ int main() {
 						tiles[level][ychecker][xchecker] = BUPBRD;
 						xchecker = xcord;
 					}
-					else if (tiles[level][ychecker][xchecker] == UPLDGE){
-						xcord = xcord - 1;
-						xchecker = xcord;
-					}
 				}
 			}
 				else{
@@ -271,11 +269,6 @@ int main() {
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
 						}
-						else if (tiles[level][ychecker][xchecker] == UPLDGE){
-							xcord = xcord + 1;
-							xchecker = xcord;
-						}
-
 					}else if (movementinput == 'w'){
 						ychecker = ychecker - 1;
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
@@ -283,19 +276,11 @@ int main() {
 							ycord = ycord - 1;
 							ychecker = ycord;
 						}
-						else if (tiles[level][ychecker][xchecker] == UPLDGE){
-							cout << "you can't do that" << endl;
-							ychecker = ycord;
-						}
 					}
 					else if (movementinput == 's'){
 						ychecker = ychecker + 1;
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
-						if (tiles[level][ychecker][xchecker] == UPLDGE){
-							ycord = ycord + 1;
-							ychecker = ycord;
-						}
-						else if (tiles[level][ychecker][xchecker] == UPBRDG){
+                         if (tiles[level][ychecker][xchecker] == UPBRDG){
 							ycord = ycord + 1;
 							ychecker = ycord;
 						}
@@ -308,11 +293,6 @@ int main() {
 							xcord = xcord - 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
-						}
-						else if (tiles[level][ychecker][xchecker] == UPLDGE){
-							xcord = xcord - 1;
-							xchecker = xcord;
-							//special case layer
 						}
 						//a move layer
 					}
