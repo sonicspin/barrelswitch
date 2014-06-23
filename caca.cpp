@@ -73,19 +73,16 @@ int main() {
 			{ 2, 2 },
 			{ 4, 1 }
 	};
-	int barrelspawn[3][2] = {
-			{0,0},
-			{0,0},
-            {0,0}
-	};
-	int switchspawn[3][2]{
-			{0,0},
-			{0,0},
-			{0,0}
-	};
-	struct moving_stuff{
-		int coord[][];
-	}
+	struct dynamic_stuff{
+		int xcoord[3];
+		int ycoord[3];
+	}barrelspawn,switchspawn,playerspawn;
+	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; //SPAM
+	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; //SHARE THE SPAM
+	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; //SPAM THE WORLD
+	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; //JUS SPAM IT
+	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; //ALL IN SPAM
+	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; // 100% SPAM FREE
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
@@ -99,8 +96,6 @@ int main() {
 		}
 		int xcord = spawnpoint[level][0];
 		int ycord = spawnpoint[level][1];
-		int bxcord = barrelspawn[level][0];
-		int bycord = barrelspawn[level][1]
 		sparker = true;
 		while (sparker == true){
 			if (levelindicator == false){
@@ -116,7 +111,7 @@ int main() {
 			}
 			//renderer
 			while (tilesparker == true){
-				if (yarraychecker == ycord && xarraychecker == xcord){
+                  if (yarraychecker == ycord && xarraychecker == xcord){
 					if (tiles[level][yarraychecker][xarraychecker] == BUPBRD){
 						cout << "I";
 						xarraychecker = xarraychecker + 1;
