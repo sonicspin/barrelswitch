@@ -53,7 +53,7 @@ int is_valid(int checkedtile,bool& valid){
 	}
 	return 0;
 }
-int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky,bool& error){
+int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky){
 	bool spark = true;
 	while (spark){
 		if (flooring[ycheck][xcheck] == AIRSPC){
@@ -99,7 +99,6 @@ int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord,
 			spark = false;
 		}
 		else{ spark = false;
-		error = true;
 		}
 	}
 	return 0;
@@ -196,14 +195,14 @@ int main() {
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
-	int level = 0;
+	int level = 3, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
 	bool bcarr, spcarr, scarr, b2car, sp2car, s2car;
 	bcarr = false; spcarr = false; scarr = false; b2car = false; sp2car = false; s2car = false;
 	/*bcoords = barrel carriers
 	  scoords = switch carriers
 	  spcoords = wall carriers */
-	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false,error = false;
+	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false,tilecheck = false;
 	while (oversparker == true){
 		if (levelcomplete == true){
 			level = level + 1;
@@ -237,9 +236,12 @@ int main() {
 			int ychecker = ycord;
 			//renderer
 			while (tilesparker == true){
-				is_valid(tiles[level][yarraychecker][xarraychecker],error);
-				if (error == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, error);
+				if (loop == 150){ 
+					cout << "ERROR NO.1: infinite loop!";
+					tilesparker = false; }
+				is_valid(tiles[level][yarraychecker][xarraychecker],tilecheck);
+				if (tilecheck == true){
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker);
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -247,43 +249,33 @@ int main() {
 						xarraychecker = xarraychecker + 1;
 						bcarr = true; b2car = true;
 					}
-					else if (!sxcoord){
-						if ((xarraychecker == sxcoord && yarraychecker == sycoord) && !switchspawn.is_active){
+					else if ((xarraychecker == sxcoord && yarraychecker == sycoord) && switchspawn.is_active == false){
 							cout << "S";
 							xarraychecker = xarraychecker + 1;
-							scarr = true;
-							s2car = true;
 						}
-						else if ((xarraychecker == sxcoord && yarraychecker) == sycoord && switchspawn.is_active){
+						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
 							cout << "O";
-							scarr = true;
-							s2car = true;
+							xarraychecker = xarraychecker + 1;
 						}
-					}
-					else if (!spxcoord){
-						if ((xarraychecker == spxcoord && yarraychecker == spycoord) && !specspawn.is_active){
+						else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active == false){
 							cout << "E";
 							xarraychecker = xarraychecker + 1;
-							spcarr = true;
-							sp2car = true;
 						}
-						else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active){
+						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
 							cout << ",";
 							xarraychecker = xarraychecker + 1;
-							spcarr = true;
-							sp2car = true;
 						}
 					}
-				}
-				else if (error == false){
-							cout << "there was an error rendering this, the error tile was "
+				else if (tilecheck == false){
+							cout << "ERROR NO.2:there was an error rendering this, the tilecheck tile was "
 								<< tiles[level][yarraychecker][xarraychecker] << endl;
 							tilesparker = false;
 						}
 						spcarr = false;
 						scarr = false;
 						bcarr = false;
-						error = false;
+						tilecheck = false;
+						loop++;
 						//end renderer
 				}
 				cin >> movementinput;
