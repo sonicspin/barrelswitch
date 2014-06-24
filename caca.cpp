@@ -323,12 +323,12 @@ int main() {
 				debug = true;
 				while (debug == true){
 					if(annoyer){
-				cout << "available commands: goto, level,lvlprint" << endl;
+				cout << "available commands: goto, level,lvlprint,exit" << endl;
 				annoyer = false;
 					}
 				cin >> debugger;
 				if(debugger == "help"){
-				cout << "available commands: goto, level,lvlprint, exit" << endl;
+				cout << "available commands: goto,level,lvlprint,exit" << endl;
 				cout << "write help <command> to see more information" << endl;
 				}else if(debugger == "lvlprint"){
                  debugrender(tiles[level], xarraychecker, yarraychecker);
@@ -341,12 +341,14 @@ int main() {
 				}else if (debugger == "exit"){
 					debug = false;
 				}else if(debugger == "goto"){
-				int, xtele,ytele;
+				int xtele,ytele;
 				cout << "enter the x coordinate you want to teleport" << endl;
 				cin >> xtele;
                 cout << "enter the y coordinate you want to teleport" << endl;
 				cin >> ytele;
-				cout << "close the debugger to apply"
+				xcord = xtele;
+				ycord = ytele;
+				cout << "close the debugger to apply" << endl;
 				}
 				}
 				}
