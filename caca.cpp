@@ -196,10 +196,8 @@ int main() {
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
-	int level = 0, loop = 0;
+	int level =3, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
-	bool bcarr, spcarr, scarr, b2car, sp2car, s2car;
-	bcarr = false; spcarr = false; scarr = false; b2car = false; sp2car = false; s2car = false;
 	/*bcoords = barrel carriers
 	  scoords = switch carriers
 	  spcoords = wall carriers */
@@ -250,7 +248,6 @@ int main() {
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
 						cout << "O";
 						xarraychecker = xarraychecker + 1;
-						bcarr = true; b2car = true;
 					}
 					else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
 							cout << "S";
@@ -273,10 +270,8 @@ int main() {
 							cout << "ERROR NO.2:there was an error rendering this, the error tile was "
 								<< tiles[level][yarraychecker][xarraychecker] << endl;
 							tilesparker = false;
+							loop = 0;
 						}
-						spcarr = false;
-						scarr = false;
-						bcarr = false;
 						tilecheck = false;
 						loop++;
 						//end renderer
@@ -296,7 +291,10 @@ int main() {
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bycheck = bycoord - 1;
-							mov(bycoord,bycheck,tiles[level][bycheck][bycoord]);
+							tiles[level][bycoord][bxcoord] = 8;
+							mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck]);
+							tiles[level][bycoord][bxcoord] = 8;
 						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							ycord = ycord - 1;
@@ -308,7 +306,13 @@ int main() {
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bycheck = bycoord + 1;
-							mov(bycoord, bycheck, tiles[level][bycheck][bycoord]);
+							tiles[level][bycoord][bxcoord] = 2;
+							mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck]);
+							tiles[level][bycheck][bxcheck] = 8;
+							ycord = ycord + 1;
+							ychecker = ycord;
+
 						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							ycord = ycord + 1;
@@ -327,7 +331,7 @@ int main() {
 						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord + 1;
-							mov(bxcoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck]);
 						}else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord + 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
@@ -349,7 +353,7 @@ int main() {
 						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord - 1;
-							mov(bxcoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck]);
 						}
 						else
 						if (tiles[level][ychecker][xchecker] == UPBRDG){
@@ -365,7 +369,7 @@ int main() {
 						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord + 1;
-							mov(bxcoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck]);
 						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord + 1;
@@ -378,7 +382,7 @@ int main() {
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bycheck = bycoord - 1;
-							mov(bycoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck]);
 						}else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							ycord = ycord - 1;
 							ychecker = ycord;
@@ -389,7 +393,7 @@ int main() {
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bycheck = bycoord + 1;
-							mov(bycoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck]);
 						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							ycord = ycord + 1;
@@ -402,7 +406,7 @@ int main() {
 						mov(xcord, xchecker, tiles[level][ychecker][xchecker]);
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord - 1;
-							mov(bxcoord, bycheck, tiles[level][bycheck][bycoord]);
+							mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck]);
 						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord - 1;
