@@ -53,7 +53,7 @@ int is_valid(int checkedtile,bool& valid){
 	}
 	return 0;
 }
-int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky){
+int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky,int& loop){
 	bool spark = true;
 	while (spark){
 		if (flooring[ycheck][xcheck] == AIRSPC){
@@ -97,6 +97,7 @@ int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord,
 			ycheck = 0;
 			sparky = false;
 			spark = false;
+			loop = 0;
 		}
 		else{ spark = false;
 		}
@@ -187,7 +188,7 @@ int main() {
 	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; playerspawn.xcoord[3] = 2; //SPAM
 	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; playerspawn.ycoord[3] = 3; //SHARE THE SPAM
 	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; barrelspawn.xcoord[3] = 15; //SPAM THE WORLD
-	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; barrelspawn.ycoord[3] = 2;//JUST SPAM IT
+	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; barrelspawn.ycoord[3] = 3;//JUST SPAM IT
 	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; switchspawn.xcoord[3] = 7; //ALL IN SPAM
 	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; switchspawn.ycoord[3] = 8; // 100% SPAM FREE
 	specspawn.xcoord[0] = 0; specspawn.xcoord[1] = 0; specspawn.xcoord[2] = 0; specspawn.xcoord[3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
@@ -241,7 +242,7 @@ int main() {
 					tilesparker = false; }
 				is_valid(tiles[level][yarraychecker][xarraychecker],tilecheck);
 				if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker);
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker,loop);
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -249,7 +250,7 @@ int main() {
 						xarraychecker = xarraychecker + 1;
 						bcarr = true; b2car = true;
 					}
-					else if ((xarraychecker == sxcoord && yarraychecker == sycoord) && switchspawn.is_active == false){
+					else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
 							cout << "S";
 							xarraychecker = xarraychecker + 1;
 						}
@@ -257,7 +258,7 @@ int main() {
 							cout << "O";
 							xarraychecker = xarraychecker + 1;
 						}
-						else if ((xarraychecker == spxcoord && yarraychecker == spycoord) && specspawn.is_active == false){
+						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
 							cout << "E";
 							xarraychecker = xarraychecker + 1;
 						}
@@ -267,7 +268,7 @@ int main() {
 						}
 					}
 				else if (tilecheck == false){
-							cout << "ERROR NO.2:there was an error rendering this, the tilecheck tile was "
+							cout << "ERROR NO.2:there was an error rendering this, the error tile was "
 								<< tiles[level][yarraychecker][xarraychecker] << endl;
 							tilesparker = false;
 						}
