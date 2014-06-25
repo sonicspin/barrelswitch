@@ -1,31 +1,9 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include<Render.h>
 using namespace std;
-enum TILENAME{
-	WALLTL = 1,
-	FLOORT = 2,
-	STAIRS = 3,
-	AIRSPC = 4,
-	LINBRK = 5,
-	LVLEND = 7,
-	DYNAMC = 8,
-	HORBRD = 9,
-	BHORBD = 10,
-	UPBRDG = 11,
-	BUPBRD = 12,
-};
-using namespace std;
-HANDLE hCon;
-
-enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
-
-void SetColor(Color c){
-	if (hCon == NULL)
-		hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hCon, c);
-}
-int is_valid(int checkedtile,bool& valid){
+int is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
 	case 1:
@@ -61,85 +39,6 @@ int is_valid(int checkedtile,bool& valid){
 	default:
 		valid = false;
 		break;
-	}
-	return 0;
-}
-int debugrender(int arr[60][70],int& xdcheck, int& ydcheck){
-	bool spark = true;
-	while (spark){
-		if (arr[ydcheck][xdcheck] == LVLEND){
-			cout << LVLEND << endl;
-			xdcheck = 0;
-			ydcheck = 0;
-			spark = false;
-		}
-		else if(arr[ydcheck][xdcheck] == LINBRK){
-			cout << LINBRK << endl;
-			xdcheck = 0;
-			ydcheck = ydcheck + 1;
-		}
-		else{ 
-			cout << arr[ydcheck][xdcheck];
-			xdcheck = xdcheck + 1;
-		}
-	}
-	return 0;
-}
-int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord, int lvl, bool& sparky,int& loop){
-	bool spark = true;
-	while (spark){
-		if (flooring[ycheck][xcheck] == AIRSPC){
-			SetColor(DARKGRAY);
-			cout << "_";
-			xcheck = xcheck + 1;
-		}
-		else if (ycheck == ycoord && xcheck == xcoord){
-			if (flooring[ycheck][xcheck] == BUPBRD){
-				SetColor(BLUE);
-				cout << "I";
-				xcheck = xcheck + 1;
-			}
-			else{
-				SetColor(BLUE);
-				cout << "@";
-				xcheck = xcheck + 1;
-			}
-		}
-		else if (flooring[ycheck][xcheck] == FLOORT){
-			SetColor(DARKGRAY);
-			cout << ",";
-			xcheck = xcheck + 1;
-		}
-		else if (flooring[ycheck][xcheck] == STAIRS){
-			SetColor(YELLOW);
-			cout << "L";
-			xcheck = xcheck + 1;
-		} 
-		else if (flooring[ycheck][xcheck] == LINBRK){
-			cout << endl;
-			xcheck = 0;
-			ycheck = ycheck + 1;
-		}
-		else if (flooring[ycheck][xcheck] == WALLTL){
-			SetColor(WHITE);
-			cout << "E";
-			xcheck = xcheck + 1;
-		}
-		else if (flooring[ycheck][xcheck] == UPBRDG){
-			SetColor(TEAL);
-			cout << "I";
-			xcheck = xcheck + 1;
-		}
-		else if (flooring[ycheck][xcheck] == LVLEND){
-			cout << endl;
-			xcheck = 0;
-			ycheck = 0;
-			sparky = false;
-			spark = false;
-			loop = 0;
-		}
-		else{ spark = false;
-		}
 	}
 	return 0;
 }
@@ -238,19 +137,20 @@ int main() {
 		string text;
 	};
 	struct dynamic_stuff{
-		int xcoord[4];
-		int ycoord[4];
+		int xcoord[2][4];
+		int ycoord[2][4];
 		bool is_active;
+		int is_activated_by;
 	}
 	barrelspawn, switchspawn, playerspawn, specspawn;
-	playerspawn.xcoord[0] = 2; playerspawn.xcoord[1] = 2; playerspawn.xcoord[2] = 4; playerspawn.xcoord[3] = 2; //SPAM
-	playerspawn.ycoord[0] = 5; playerspawn.ycoord[1] = 2; playerspawn.ycoord[2] = 1; playerspawn.ycoord[3] = 3; //SHARE THE SPAM
-	barrelspawn.xcoord[0] = 0; barrelspawn.xcoord[1] = 0; barrelspawn.xcoord[2] = 0; barrelspawn.xcoord[3] = 15; //SPAM THE WORLD
-	barrelspawn.ycoord[0] = 0; barrelspawn.ycoord[1] = 0; barrelspawn.ycoord[2] = 0; barrelspawn.ycoord[3] = 3;//JUST SPAM IT
-	switchspawn.xcoord[0] = 0; switchspawn.xcoord[1] = 0; switchspawn.xcoord[2] = 0; switchspawn.xcoord[3] = 7; //ALL IN SPAM
-	switchspawn.ycoord[0] = 0; switchspawn.ycoord[1] = 0; switchspawn.ycoord[2] = 0; switchspawn.ycoord[3] = 8; // 100% SPAM FREE
-	specspawn.xcoord[0] = 0; specspawn.xcoord[1] = 0; specspawn.xcoord[2] = 0; specspawn.xcoord[3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
-	specspawn.ycoord[0] = 0; specspawn.ycoord[1] = 0; specspawn.ycoord[2] = 0; specspawn.ycoord[3] = 13; //WE NEED TO GO SPAMMER
+	playerspawn.xcoord[0][0] = 2; playerspawn.xcoord[0][1] = 2; playerspawn.xcoord[0][2] = 4; playerspawn.xcoord[0][3] = 2; //SPAM
+	playerspawn.ycoord[0][0] = 5; playerspawn.ycoord[0][1] = 2; playerspawn.ycoord[0][2] = 1; playerspawn.ycoord[0][3] = 3; //SHARE THE SPAM
+	barrelspawn.xcoord[0][0] = 0; barrelspawn.xcoord[0][1] = 0; barrelspawn.xcoord[0][2] = 0; barrelspawn.xcoord[0][3] = 15; //SPAM THE WORLD
+	barrelspawn.ycoord[0][0] = 0; barrelspawn.ycoord[0][1] = 0; barrelspawn.ycoord[0][2] = 0; barrelspawn.ycoord[0][3] = 3;//JUST SPAM IT
+	switchspawn.xcoord[0][0] = 0; switchspawn.xcoord[0][1] = 0; switchspawn.xcoord[0][2] = 0; switchspawn.xcoord[0][3] = 7; //ALL IN SPAM
+	switchspawn.ycoord[0][0] = 0; switchspawn.ycoord[0][1] = 0; switchspawn.ycoord[0][2] = 0; switchspawn.ycoord[0][3] = 8; // 100% SPAM FREE
+	specspawn.xcoord[0][0] = 0; specspawn.xcoord[0][1] = 0; specspawn.xcoord[0][2] = 0; specspawn.xcoord[0][3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
+	specspawn.ycoord[0][0] = 0; specspawn.ycoord[0][1] = 0; specspawn.ycoord[0][2] = 0; specspawn.ycoord[0][3] = 13; //WE NEED TO GO SPAMMER
 	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
@@ -267,14 +167,14 @@ int main() {
 			level = level + 1;
 			levelcomplete = false;
 		}
-		int xcord = playerspawn.xcoord[level];
-		int ycord = playerspawn.ycoord[level];
-		int bxcoord = barrelspawn.xcoord[level];
-		int bycoord = barrelspawn.ycoord[level];
-		int sxcoord = switchspawn.xcoord[level];
-		int sycoord = switchspawn.ycoord[level];
-		int spxcoord = specspawn.xcoord[level];
-		int spycoord = specspawn.ycoord[level];
+		int xcord = playerspawn.xcoord[0][level];
+		int ycord = playerspawn.ycoord[0][level];
+		int bxcoord = barrelspawn.xcoord[0][level];
+		int bycoord = barrelspawn.ycoord[0][level];
+		int sxcoord = switchspawn.xcoord[0][level];
+		int sycoord = switchspawn.ycoord[0][level];
+		int spxcoord = specspawn.xcoord[0][level];
+		int spycoord = specspawn.ycoord[0][level];
 		specspawn.is_active = false;
 		switchspawn.is_active = false;
 		sparker = true;
@@ -305,7 +205,10 @@ int main() {
 			//renderer
 			while (tilesparker == true){
 				if (loop == 150){ 
-					cout << "ERROR NO.1: infinite loop!";
+					SetColor(RED);
+					cout << "ERROR NO.1:";
+					SetColor(TEAL);
+					cout <<" infinite loop!";
 					tilesparker = false; }
 				is_valid(tiles[level][yarraychecker][xarraychecker],tilecheck);
 				if (tilecheck == true){
@@ -339,8 +242,12 @@ int main() {
 						}
 					}
 				else if (tilecheck == false){
-							cout << "ERROR NO.2:there was an error rendering this, the error tile was "
-								<< tiles[level][yarraychecker][xarraychecker] << endl;
+					        SetColor(RED);
+							cout << "ERROR NO.2:";
+							SetColor(GRAY);
+							cout << "there was an error rendering this, the error tile was ";
+							SetColor(RED);
+						    cout << tiles[level][yarraychecker][xarraychecker] << endl;
 							tilesparker = false;
 							loop = 0;
 						}
@@ -348,12 +255,14 @@ int main() {
 						loop++;
 						//end renderer
 				}
+			    SetColor(GREEN);
 				cin >> movementinput;
 				if(movementinput == 'p'){
 					bool annoyer = true;
 				debug = true;
 				while (debug == true){
 					if(annoyer){
+						SetColor(DARKTEAL);
 				cout << "available commands: goto, level,lvlprint,exit" << endl;
 				annoyer = false;
 					}
