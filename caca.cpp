@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 using namespace std;
 enum TILENAME{
 	WALLTL = 1,
@@ -14,6 +15,16 @@ enum TILENAME{
 	UPBRDG = 11,
 	BUPBRD = 12,
 };
+using namespace std;
+HANDLE hCon;
+
+enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
+
+void SetColor(Color c){
+	if (hCon == NULL)
+		hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hCon, c);
+}
 int is_valid(int checkedtile,bool& valid){
 	switch (checkedtile)
 	{
@@ -78,24 +89,29 @@ int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord,
 	bool spark = true;
 	while (spark){
 		if (flooring[ycheck][xcheck] == AIRSPC){
+			SetColor(DARKGRAY);
 			cout << "_";
 			xcheck = xcheck + 1;
 		}
 		else if (ycheck == ycoord && xcheck == xcoord){
 			if (flooring[ycheck][xcheck] == BUPBRD){
+				SetColor(BLUE);
 				cout << "I";
 				xcheck = xcheck + 1;
 			}
 			else{
+				SetColor(BLUE);
 				cout << "@";
 				xcheck = xcheck + 1;
 			}
 		}
 		else if (flooring[ycheck][xcheck] == FLOORT){
+			SetColor(DARKGRAY);
 			cout << ",";
 			xcheck = xcheck + 1;
 		}
 		else if (flooring[ycheck][xcheck] == STAIRS){
+			SetColor(YELLOW);
 			cout << "L";
 			xcheck = xcheck + 1;
 		} 
@@ -105,10 +121,12 @@ int render(int flooring[60][70],int& xcheck, int& ycheck,int xcoord, int ycoord,
 			ycheck = ycheck + 1;
 		}
 		else if (flooring[ycheck][xcheck] == WALLTL){
+			SetColor(WHITE);
 			cout << "E";
 			xcheck = xcheck + 1;
 		}
 		else if (flooring[ycheck][xcheck] == UPBRDG){
+			SetColor(TEAL);
 			cout << "I";
 			xcheck = xcheck + 1;
 		}
@@ -214,6 +232,11 @@ int main() {
 			{ 2, 2 },
 			{ 4, 1 }
 	};
+	struct npc{
+		int x[4];
+		int y[4];
+		string text;
+	};
 	struct dynamic_stuff{
 		int xcoord[4];
 		int ycoord[4];
@@ -264,6 +287,9 @@ int main() {
 			if (bycoord == sycoord && bxcoord == sxcoord){
 				switchspawn.is_active = true;
 			}
+			else{
+				switchspawn.is_active = false;
+			}
 			if (tiles[level][ycord][xcord] == 3){
 				cout << "you're on a staircase! write \"q\" to go up a level!" << endl;
 			}
@@ -287,22 +313,27 @@ int main() {
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
+						SetColor(RED);
 						cout << "O";
 						xarraychecker = xarraychecker + 1;
 					}
 					else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
+						SetColor(RED);
 							cout << "S";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
+							SetColor(RED);
 							cout << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
+							SetColor(RED);
 							cout << "E";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
+							SetColor(GRAY);
 							cout << ",";
 							xarraychecker = xarraychecker + 1;
 						}
