@@ -201,6 +201,7 @@ int main() {
 			int bycheck = bycoord;
 			int bxcheck = bxcoord;
 			bool movcheck = true;
+			loop = 0;
 			//renderer
 			while (tilesparker == true){
 				if (loop == 150){
@@ -249,7 +250,6 @@ int main() {
 						SetColor(RED);
 						cout << tiles[level][yarraychecker][xarraychecker] << endl;
 						tilesparker = false;
-						loop = 0;
 					}
 					tilecheck = false;
 					loop++;

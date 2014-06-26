@@ -202,8 +202,9 @@ int main() {
 			int bxcheck = bxcoord;
 			bool movcheck = true;
 			//renderer
+			loop = 0;
 			while (tilesparker == true){
-					if (loop == 300){
+					if (loop == 1024){
 						cout << "\033[0;31;40m" << "ERROR NO.1:";
 						cout << "\033[0;36;40m" << "infinite loop!";
 						tilesparker = false;
@@ -239,7 +240,6 @@ int main() {
 						cout << "\033[0;37;40m" << "there was an error rendering this, the error tile was ";
 						cout << "\033[0;31;40m" << tiles[level][yarraychecker][xarraychecker] << endl;
 						tilesparker = false;
-						loop = 0;
 					}
 					tilecheck = false;
 					loop++;
