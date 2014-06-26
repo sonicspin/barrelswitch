@@ -117,20 +117,20 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 	 }
 	 else if (ycheck == ycoord && xcheck == xcoord){
 		 if (flooring[ycheck][xcheck] == BUPBRD){
-			 cout << "/033[0,34m"<<"I";
+			 cout << "\033[0,34m"<<"I";
 			 xcheck = xcheck + 1;
 		 }
 		 else{
-			 cout << "/033[0,34m"<<"@";
+			 cout << "\033[0,34m"<<"@";
 			 xcheck = xcheck + 1;
 		 }
 	 }
 	 else if (flooring[ycheck][xcheck] == FLOORT){
-		 cout << "/033[0,37m"<<",";
+		 cout << "\033[0,37m"<<",";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == STAIRS){
-		 cout << "/033[0,33m"<<"L";
+		 cout << "\033[0,33m"<<"L";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == LINBRK){
@@ -139,11 +139,11 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 		 ycheck = ycheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == WALLTL){
-		 cout << "/033[0,37m"<<"E";
+		 cout << "\033[0,37m"<<"E";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == UPBRDG){
-		 cout << "/033[0,36m"<<"I";
+		 cout << "\033[0,36m"<<"I";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == LVLEND){

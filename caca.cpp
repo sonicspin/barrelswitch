@@ -259,8 +259,8 @@ int main() {
 				}
 				else if (OpCheck == false){
 					if (loop == 150){
-						cout << "/033[0,31m"<<"ERROR NO.1:";
-						cout << "/033[0,36m"<<"infinite loop!";
+						cout << "\033[0,31m"<<"ERROR NO.1:";
+						cout << "\033[0,36m"<<"infinite loop!";
 						tilesparker = false;
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
@@ -269,30 +269,30 @@ int main() {
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							cout << "/033[0,31m"<<"O";
+							cout << "\033[0,31m"<<"O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-							cout << "/033[0,31m"<<"S";
+							cout << "\033[0,31m"<<"S";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-							cout << "/033[0,31m"<<"O";
+							cout << "\033[0,31m"<<"O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-							cout << "/033[0,31m"<<"E";
+							cout << "\033[0,31m"<<"E";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-							cout << "/033[0,37m"<<",";
+							cout << "\033[0,37m"<<",";
 							xarraychecker = xarraychecker + 1;
 						}
 					}
 					else if (tilecheck == false){
-						cout << "/033[0,31m"<<"ERROR NO.2:";
-						cout << "/033[0,37m"<<"there was an error rendering this, the error tile was ";
-						cout << "/033[0,31m"<<tiles[level][yarraychecker][xarraychecker] << endl;
+						cout << "\033[0,31m"<<"ERROR NO.2:";
+						cout << "\033[0,37m"<<"there was an error rendering this, the error tile was ";
+						cout << "\033[0,31m"<<tiles[level][yarraychecker][xarraychecker] << endl;
 						tilesparker = false;
 						loop = 0;
 					}
