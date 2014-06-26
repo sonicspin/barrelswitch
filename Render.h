@@ -6,12 +6,16 @@
 #define isWin false;
 #endif
 using namespace std;
-HANDLE hCon;
+bool OScheck = isWin;
 enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
 void SetColor(Color c){
-	if (hCon == NULL)
-		hCon = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hCon, c);
+	HANDLE hCon = NULL;
+	if (OScheck == true){
+		if (hCon == NULL){
+			hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(hCon, c);
+		}
+	}
 }
 enum TILENAME{
 	WALLTL = 1,
@@ -48,9 +52,8 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	return 0;
 }
 int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop){
-	bool OScheck = isWin;
 	bool spark = true;
-	if (OScheck = true){
+	if (OScheck == true){
 	while (spark){
 			if (flooring[ycheck][xcheck] == AIRSPC){
 				SetColor(DARKGRAY);
