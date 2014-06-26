@@ -34,8 +34,11 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	}
 	return 0;
 }
-int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop){
+int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop,bool looper,int& loopy){
 	bool spark = true;
+	if (looper){
+		loopy++;
+	}
 	 if (flooring[ycheck][xcheck] == AIRSPC){
 		 cout << "\033[0;30;40m" << "_";
 		 xcheck = xcheck + 1;
@@ -78,6 +81,7 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 		 sparky = false;
 		 spark = false;
 		 loop = 0;
+		 if (looper){ cout << loopy<<endl; }
 	 }
 	 else{
 		 spark = false;

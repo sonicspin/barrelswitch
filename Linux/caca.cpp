@@ -154,7 +154,8 @@ int main() {
 	cout << "welcome to my game" << endl;
 	cout << "WASD to move!" << endl;
 	string debugger;
-	bool debug;
+	bool debug,loopcheck = false;
+	int loopcount = 0;
 	int level =0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
 	/*bcoords = barrel carriers
@@ -204,14 +205,14 @@ int main() {
 			//renderer
 			loop = 0;
 			while (tilesparker == true){
-					if (loop == 1024){
+					if (loop == 4210){
 						cout << "\033[0;31;40m" << "ERROR NO.1:";
 						cout << "\033[0;36;40m" << "infinite loop!";
 						tilesparker = false;
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
 					if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop);
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop,loopcheck,loopcount);
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -251,12 +252,12 @@ int main() {
 				debug = true;
 				while (debug == true){
 					if(annoyer){
-				cout << "available commands: goto, level,lvlprint,exit" << endl;
+				cout << "available commands: goto, level,lvlprint,exit,loopcheck" << endl;
 				annoyer = false;
 					}
 				cin >> debugger;
 				if(debugger == "help"){
-				cout << "available commands: goto,level,lvlprint,exit" << endl;
+				cout << "available commands: goto,level,lvlprint,exit,loopcheck" << endl;
 				cout << "write help <command> to see more information" << endl;
 				}else if(debugger == "lvlprint"){
                  debugrender(tiles[level], xarraychecker, yarraychecker);
@@ -277,6 +278,10 @@ int main() {
 				xcord = xtele;
 				ycord = ytele;
 				cout << "close the debugger to apply" << endl;
+				}
+				else if (debugger == "loopcheck"){
+					cout << "loopchecking switched" << endl;
+					loopcheck = !loopcheck;
 				}
 				}
 				}
