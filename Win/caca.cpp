@@ -73,7 +73,9 @@ int mov(int& coord, int movcoord, int checktile,bool is_barrel){
 	return 0;
 }
 int main() {
-	int	tiles[4][60][70] = {
+	const int lvlamount = 4;
+	int x = 70, y = 60;
+	int tiles[lvlamount][60][70]={
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },
 				{ 1, 2, 2, 2, 2, 1, 5 },
@@ -130,18 +132,17 @@ int main() {
 			{ 2, 2 },
 			{ 4, 1 }
 	};
-	struct npc{
-		int x[4];
-		int y[4];
-		string text;
-	};
+
 	struct dynamic_stuff{
 		int xcoord[2][4];
 		int ycoord[2][4];
 		bool is_active;
 		int is_activated_by;
-	}
-	barrelspawn, switchspawn, playerspawn, specspawn;
+	}	barrelspawn, switchspawn, playerspawn, specspawn;
+	struct npc{
+		dynamic_stuff coords;
+		string text;
+	};
 	playerspawn.xcoord[0][0] = 2; playerspawn.xcoord[0][1] = 2; playerspawn.xcoord[0][2] = 4; playerspawn.xcoord[0][3] = 2; //SPAM
 	playerspawn.ycoord[0][0] = 5; playerspawn.ycoord[0][1] = 2; playerspawn.ycoord[0][2] = 1; playerspawn.ycoord[0][3] = 3; //SHARE THE SPAM
 	barrelspawn.xcoord[0][0] = 0; barrelspawn.xcoord[0][1] = 0; barrelspawn.xcoord[0][2] = 0; barrelspawn.xcoord[0][3] = 15; //SPAM THE WORLD
