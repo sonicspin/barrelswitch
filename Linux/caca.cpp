@@ -155,7 +155,6 @@ int main() {
 	cout << "WASD to move!" << endl;
 	string debugger;
 	bool debug;
-	bool OpCheck = isWin;
 	int level =0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
 	/*bcoords = barrel carriers
@@ -204,63 +203,9 @@ int main() {
 			int bxcheck = bxcoord;
 			//renderer
 			while (tilesparker == true){
-				if (OpCheck == true){
-				if (loop == 150){
-					SetColor(RED);
-					cout << "ERROR NO.1:";
-					SetColor(TEAL);
-					cout << " infinite loop!";
-					tilesparker = false;
-				}
-				is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
-					if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop);
-					}
-					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
-						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							SetColor(RED);
-							cout << "O";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-							SetColor(RED);
-							cout << "S";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-							SetColor(RED);
-							cout << "O";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-							SetColor(RED);
-							cout << "E";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-							SetColor(GRAY);
-							cout << ",";
-							xarraychecker = xarraychecker + 1;
-						}
-					}
-					else if (tilecheck == false){
-						SetColor(RED);
-						cout << "ERROR NO.2:";
-						SetColor(GRAY);
-						cout << "there was an error rendering this, the error tile was ";
-						SetColor(RED);
-						cout << tiles[level][yarraychecker][xarraychecker] << endl;
-						tilesparker = false;
-						loop = 0;
-					}
-					tilecheck = false;
-					loop++;
-					//end renderer
-				}
-				else if (OpCheck == false){
 					if (loop == 150){
-						cout << "\033[0,31m"<<"ERROR NO.1:";
-						cout << "\033[0,36m"<<"infinite loop!";
+						cout << "\033[0,31,40m" << "ERROR NO.1:";
+						cout << "\033[0,36,40m" << "infinite loop!";
 						tilesparker = false;
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
@@ -269,30 +214,30 @@ int main() {
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							cout << "\033[0,31m"<<"O";
+							cout << "\033[0,31,40m" << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-							cout << "\033[0,31m"<<"S";
+							cout << "\033[0,31,40m" << "S";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-							cout << "\033[0,31m"<<"O";
+							cout << "\033[0,31,40m" << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-							cout << "\033[0,31m"<<"E";
+							cout << "\033[0,31,40m" << "E";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-							cout << "\033[0,37m"<<",";
+							cout << "\033[0,37,40m" << ",";
 							xarraychecker = xarraychecker + 1;
 						}
 					}
 					else if (tilecheck == false){
-						cout << "\033[0,31m"<<"ERROR NO.2:";
-						cout << "\033[0,37m"<<"there was an error rendering this, the error tile was ";
-						cout << "\033[0,31m"<<tiles[level][yarraychecker][xarraychecker] << endl;
+						cout << "\033[0,31,40m" << "ERROR NO.2:";
+						cout << "\033[0,37,40m" << "there was an error rendering this, the error tile was ";
+						cout << "\033[0,31,40m" << tiles[level][yarraychecker][xarraychecker] << endl;
 						tilesparker = false;
 						loop = 0;
 					}
@@ -300,7 +245,6 @@ int main() {
 					loop++;
 					//end renderer
 				}
-			}
 				cin >> movementinput;
 				if(movementinput == 'p'){
 					bool annoyer = true;
@@ -585,5 +529,4 @@ int main() {
 			//sparker layer
 		}
 		//oversparker layer
-	} //too many layers of indentation @_@
-//main() layer
+	} 
