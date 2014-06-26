@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <windows.h>
 #include<Render.h>
 using namespace std;
 int is_valid(int checkedtile, bool& valid){
@@ -156,6 +155,7 @@ int main() {
 	cout << "WASD to move!" << endl;
 	string debugger;
 	bool debug;
+	bool OpCheck = isWin;
 	int level =0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
 	/*bcoords = barrel carriers
@@ -204,24 +204,26 @@ int main() {
 			int bxcheck = bxcoord;
 			//renderer
 			while (tilesparker == true){
-				if (loop == 150){ 
+				if (OpCheck == true){
+				if (loop == 150){
 					SetColor(RED);
 					cout << "ERROR NO.1:";
 					SetColor(TEAL);
-					cout <<" infinite loop!";
-					tilesparker = false; }
-				is_valid(tiles[level][yarraychecker][xarraychecker],tilecheck);
-				if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker,loop);
+					cout << " infinite loop!";
+					tilesparker = false;
 				}
-				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
-					if (xarraychecker == bxcoord && yarraychecker == bycoord){
-						SetColor(RED);
-						cout << "O";
-						xarraychecker = xarraychecker + 1;
+				is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
+					if (tilecheck == true){
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop);
 					}
-					else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-						SetColor(RED);
+					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
+						if (xarraychecker == bxcoord && yarraychecker == bycoord){
+							SetColor(RED);
+							cout << "O";
+							xarraychecker = xarraychecker + 1;
+						}
+						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
+							SetColor(RED);
 							cout << "S";
 							xarraychecker = xarraychecker + 1;
 						}
@@ -241,28 +243,73 @@ int main() {
 							xarraychecker = xarraychecker + 1;
 						}
 					}
-				else if (tilecheck == false){
-					        SetColor(RED);
-							cout << "ERROR NO.2:";
-							SetColor(GRAY);
-							cout << "there was an error rendering this, the error tile was ";
-							SetColor(RED);
-						    cout << tiles[level][yarraychecker][xarraychecker] << endl;
-							tilesparker = false;
-							loop = 0;
-						}
-						tilecheck = false;
-						loop++;
-						//end renderer
+					else if (tilecheck == false){
+						SetColor(RED);
+						cout << "ERROR NO.2:";
+						SetColor(GRAY);
+						cout << "there was an error rendering this, the error tile was ";
+						SetColor(RED);
+						cout << tiles[level][yarraychecker][xarraychecker] << endl;
+						tilesparker = false;
+						loop = 0;
+					}
+					tilecheck = false;
+					loop++;
+					//end renderer
 				}
-			    SetColor(GREEN);
+				else if (OpCheck == false){
+					if (loop == 150){
+						SetColor(RED);
+						cout << "ERROR NO.1:";
+						SetColor(TEAL);
+						cout << " infinite loop!";
+						tilesparker = false;
+					}
+					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
+					if (tilecheck == true){
+						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop);
+					}
+					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
+						if (xarraychecker == bxcoord && yarraychecker == bycoord){
+							cout << "/033[0,31mO";
+							xarraychecker = xarraychecker + 1;
+						}
+						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
+							cout << "/033[0,31mS";
+							xarraychecker = xarraychecker + 1;
+						}
+						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
+							cout << "/033[0,31mO";
+							xarraychecker = xarraychecker + 1;
+						}
+						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
+							cout << "/033[0,31mE";
+							xarraychecker = xarraychecker + 1;
+						}
+						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
+							cout << "/033[0,37m,";
+							xarraychecker = xarraychecker + 1;
+						}
+					}
+					else if (tilecheck == false){
+						cout << "/033[0,31mERROR NO.2:";
+						cout << "/033[0,37mthere was an error rendering this, the error tile was ";
+						cout << "/033[0,31m";
+						cout << tiles[level][yarraychecker][xarraychecker] << endl;
+						tilesparker = false;
+						loop = 0;
+					}
+					tilecheck = false;
+					loop++;
+					//end renderer
+				}
+			}
 				cin >> movementinput;
 				if(movementinput == 'p'){
 					bool annoyer = true;
 				debug = true;
 				while (debug == true){
 					if(annoyer){
-						SetColor(DARKTEAL);
 				cout << "available commands: goto, level,lvlprint,exit" << endl;
 				annoyer = false;
 					}

@@ -6,7 +6,7 @@ Version 0.1.2
 
 Crash prone is not
 
-Use Wine to use in Linux
+Supports Linux and Windows
 
 Caca.cpp is the main source
 
