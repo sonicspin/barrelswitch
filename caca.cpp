@@ -259,10 +259,8 @@ int main() {
 				}
 				else if (OpCheck == false){
 					if (loop == 150){
-						SetColor(RED);
-						cout << "ERROR NO.1:";
-						SetColor(TEAL);
-						cout << " infinite loop!";
+						cout << "/033[0,31mERROR NO.1:";
+						cout << "/033[0,36minfinite loop!";
 						tilesparker = false;
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
