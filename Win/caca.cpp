@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include<Render.h>
+#include <vector>
 using namespace std;
 int is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
@@ -73,8 +74,9 @@ int mov(int& coord, int movcoord, int checktile,bool is_barrel){
 	return 0;
 }
 int main() {
-	const int lvlamount = 4;
-	int tiles[lvlamount][60][70]={
+	int lvlamount = 4;
+	int x = 70, y=60;
+	int tiles[4][60][70] = {
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },
 				{ 1, 2, 2, 2, 2, 1, 5 },

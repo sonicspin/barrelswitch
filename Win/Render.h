@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <vector>
 
 enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
 void SetColor(Color c){
@@ -25,6 +26,7 @@ enum TILENAME{
 };
 int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	bool spark = true;
+	int archeck;
 	while (spark){
 		if (arr[ydcheck][xdcheck] == LVLEND){
 			std::cout << LVLEND << std::endl;
