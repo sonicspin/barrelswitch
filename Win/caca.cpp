@@ -74,7 +74,6 @@ int mov(int& coord, int movcoord, int checktile,bool is_barrel){
 }
 int main() {
 	const int lvlamount = 4;
-	int x = 70, y = 60;
 	int tiles[lvlamount][60][70]={
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },
