@@ -204,8 +204,8 @@ int main() {
 			//renderer
 			while (tilesparker == true){
 					if (loop == 300){
-						cout << "\033[0,31,40m" << "ERROR NO.1:";
-						cout << "\033[0,36,40m" << "infinite loop!";
+						cout << "\033[0;31;40m" << "ERROR NO.1:";
+						cout << "\033[0;36;40m" << "infinite loop!";
 						tilesparker = false;
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
@@ -214,30 +214,30 @@ int main() {
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							cout << "\033[0,31,40m" << "O";
+							cout << "\033[0;31;40m" << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-							cout << "\033[0,31,40m" << "S";
+							cout << "\033[0;31;40m" << "S";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-							cout << "\033[0,31,40m" << "O";
+							cout << "\033[0;31;40m" << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-							cout << "\033[0,31,40m" << "E";
+							cout << "\033[0;31;40m" << "E";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-							cout << "\033[0,37,40m" << ",";
+							cout << "\033[0;37;40m" << ",";
 							xarraychecker = xarraychecker + 1;
 						}
 					}
 					else if (tilecheck == false){
-						cout << "\033[0,31,40m" << "ERROR NO.2:";
-						cout << "\033[0,37,40m" << "there was an error rendering this, the error tile was ";
-						cout << "\033[0,31,40m" << tiles[level][yarraychecker][xarraychecker] << endl;
+						cout << "\033[0;31;40m" << "ERROR NO.2:";
+						cout << "\033[0;37;40m" << "there was an error rendering this, the error tile was ";
+						cout << "\033[0;31;40m" << tiles[level][yarraychecker][xarraychecker] << endl;
 						tilesparker = false;
 						loop = 0;
 					}

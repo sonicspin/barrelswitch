@@ -37,25 +37,25 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop){
 	bool spark = true;
 	 if (flooring[ycheck][xcheck] == AIRSPC){
-		 cout << "\033[0,30,40m" << "_";
+		 cout << "\033[0;30;40m" << "_";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (ycheck == ycoord && xcheck == xcoord){
 		 if (flooring[ycheck][xcheck] == BUPBRD){
-			 cout << "\033[0,34,40m" << "I";
+			 cout << "\033[0;34;40m" << "I";
 			 xcheck = xcheck + 1;
 		 }
 		 else{
-			 cout << "\033[0,34,40m" << "@";
+			 cout << "\033[0;34;40m" << "@";
 			 xcheck = xcheck + 1;
 		 }
 	 }
 	 else if (flooring[ycheck][xcheck] == FLOORT){
-		 cout << "\033[0,37,40m" << ",";
+		 cout << "\033[0;37;40m" << ",";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == STAIRS){
-		 cout << "\033[0,33,40m" << "L";
+		 cout << "\033[0;33;40m" << "L";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == LINBRK){
@@ -64,11 +64,11 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 		 ycheck = ycheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == WALLTL){
-		 cout << "\033[0,37,40m" << "E";
+		 cout << "\033[0;37;40m" << "E";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == UPBRDG){
-		 cout << "\033[0,36,40m" << "I";
+		 cout << "\033[0;36;40m" << "I";
 		 xcheck = xcheck + 1;
 	 }
 	 else if (flooring[ycheck][xcheck] == LVLEND){
