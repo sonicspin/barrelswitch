@@ -155,7 +155,6 @@ int main() {
 	cout << "WASD to move!" << endl;
 	string debugger;
 	bool debug;
-	bool OpCheck = isWin;
 	int level =0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
 	/*bcoords = barrel carriers
@@ -178,7 +177,6 @@ int main() {
 		specspawn.is_active = false;
 		switchspawn.is_active = false;
 		sparker = true;
-		bool movcheck = true;
 		while (sparker == true){
 			if (levelindicator == false){
 				cout << "you are in level " << level + 1 << endl;
@@ -202,9 +200,9 @@ int main() {
 			int ychecker = ycord;
 			int bycheck = bycoord;
 			int bxcheck = bxcoord;
+			bool movcheck = true;
 			//renderer
 			while (tilesparker == true){
-				if (OpCheck == true){
 				if (loop == 150){
 					SetColor(RED);
 					cout << "ERROR NO.1:";
@@ -256,50 +254,6 @@ int main() {
 					tilecheck = false;
 					loop++;
 					//end renderer
-				}
-				else if (OpCheck == false){
-					if (loop == 150){
-						cout << "\033[0;31m" << "ERROR NO.1:";
-						cout << "\033[0;36m" << "infinite loop!";
-						tilesparker = false;
-					}
-					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
-					if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop);
-					}
-					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
-						if (xarraychecker == bxcoord && yarraychecker == bycoord){
-							cout << "\033[0;31m" << "O";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-							cout << "\033[0;31m" << "S";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-							cout << "\033[0;31m" << "O";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-							cout << "\033[0;31m" << "E";
-							xarraychecker = xarraychecker + 1;
-						}
-						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-							cout << "\033[0;37m" << ",";
-							xarraychecker = xarraychecker + 1;
-						}
-					}
-					else if (tilecheck == false){
-						cout << "\033[0;31m" << "ERROR NO.2:";
-						cout << "\033[0;37m" << "there was an error rendering this, the error tile was ";
-						cout << "\033[0;31m" << tiles[level][yarraychecker][xarraychecker] << endl;
-						tilesparker = false;
-						loop = 0;
-					}
-					tilecheck = false;
-					loop++;
-					//end renderer
-				}
 			}
 				cin >> movementinput;
 				if(movementinput == 'p'){
@@ -374,7 +328,7 @@ int main() {
 					else if (movementinput == 's'){
 						ychecker = ychecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -408,7 +362,7 @@ int main() {
 						xchecker = xchecker + 1;
 						tiles[level][ycord][xcord] = UPBRDG;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -444,7 +398,7 @@ int main() {
 						xchecker = xchecker - 1;
 						tiles[level][ycord][xcord] = UPBRDG;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -474,7 +428,7 @@ int main() {
 					if (movementinput == 'd'){
 						xchecker = xchecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -501,7 +455,7 @@ int main() {
 					else if (movementinput == 'w'){
 						ychecker = ychecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -526,7 +480,7 @@ int main() {
 					else if (movementinput == 's'){
 						ychecker = ychecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -553,7 +507,7 @@ int main() {
 					else if (movementinput == 'a'){
 						xchecker = xchecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!";
+							cout << "you can't do that!" << endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){

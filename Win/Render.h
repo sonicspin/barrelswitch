@@ -1,20 +1,14 @@
 #include <iostream>
-#ifdef _WIN32
-#define isWin true;
-#include <Windows.h>
-#else 
-#define isWin false;
-#endif
+#include <windows.h>
 using namespace std;
-bool OScheck = isWin;
+
 enum Color { DARKBLUE = 1, DARKGREEN, DARKTEAL, DARKRED, DARKPINK, DARKYELLOW, GRAY, DARKGRAY, BLUE, GREEN, TEAL, RED, PINK, YELLOW, WHITE };
 void SetColor(Color c){
 	HANDLE hCon = NULL;
-	if (OScheck == true){
+
 		if (hCon == NULL){
 			hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 			SetConsoleTextAttribute(hCon, c);
-		}
 	}
 }
 enum TILENAME{
@@ -53,7 +47,6 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 }
 int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop){
 	bool spark = true;
-	if (OScheck == true){
 	while (spark){
 			if (flooring[ycheck][xcheck] == AIRSPC){
 				SetColor(DARKGRAY);
@@ -109,54 +102,5 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 				spark = false;
 			}
 		}
-	}
- else{
-	 if (flooring[ycheck][xcheck] == AIRSPC){
-		 cout << "\033[0;30m" << "_";
-		 xcheck = xcheck + 1;
-	 }
-	 else if (ycheck == ycoord && xcheck == xcoord){
-		 if (flooring[ycheck][xcheck] == BUPBRD){
-			 cout << "\033[0;34m" << "I";
-			 xcheck = xcheck + 1;
-		 }
-		 else{
-			 cout << "\033[0;34m" << "@";
-			 xcheck = xcheck + 1;
-		 }
-	 }
-	 else if (flooring[ycheck][xcheck] == FLOORT){
-		 cout << "\033[0;37m" << ",";
-		 xcheck = xcheck + 1;
-	 }
-	 else if (flooring[ycheck][xcheck] == STAIRS){
-		 cout << "\033[0;33m" << "L";
-		 xcheck = xcheck + 1;
-	 }
-	 else if (flooring[ycheck][xcheck] == LINBRK){
-		 cout << endl;
-		 xcheck = 0;
-		 ycheck = ycheck + 1;
-	 }
-	 else if (flooring[ycheck][xcheck] == WALLTL){
-		 cout << "\033[0;37m" << "E";
-		 xcheck = xcheck + 1;
-	 }
-	 else if (flooring[ycheck][xcheck] == UPBRDG){
-		 cout << "\033[0;36m" << "I";
-		 xcheck = xcheck + 1;
-	 }
-	 else if (flooring[ycheck][xcheck] == LVLEND){
-		 cout << endl;
-		 xcheck = 0;
-		 ycheck = 0;
-		 sparky = false;
-		 spark = false;
-		 loop = 0;
-	 }
-	 else{
-		 spark = false;
-	 }
- }
 	return 0;
 }
