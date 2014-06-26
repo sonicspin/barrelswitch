@@ -26,7 +26,6 @@ enum TILENAME{
 };
 int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	bool spark = true;
-	int archeck;
 	while (spark){
 		if (arr[ydcheck][xdcheck] == LVLEND){
 			std::cout << LVLEND << std::endl;
