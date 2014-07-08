@@ -1,6 +1,6 @@
-#include <iostream>
-#include <string>
-#include<Render.h>
+#include "iostream"
+#include "string"
+#include"Render.h"
 int is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
