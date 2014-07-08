@@ -361,15 +361,15 @@ int main() {
 							xcord = xcord + 1;
 							xchecker = xcord;
 						}
-						if (movcheck){
-							tiles[level][ycord][xcord] = UPBRDG;
-							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
-						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							tiles[level][ycord][xcord] = UPBRDG;
 							xcord = xcord + 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
+						}
+						if (movcheck){
+							tiles[level][ycord][xcord] = UPBRDG;
+							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
 						}
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord + 1;
@@ -391,13 +391,13 @@ int main() {
 							xcord = xcord + 1;
 							xchecker = xcord;
 						}
-						if (movcheck){
-							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord + 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
+						}
+						if (movcheck){
+							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
 						}
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord + 1;
@@ -424,12 +424,12 @@ int main() {
 						ycord = ycord - 1;
 						ychecker = ycord;
 					}
-					if (movcheck){
-						mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-					}
 					else if (tiles[level][ychecker][xchecker] == UPBRDG){
 						ycord = ycord - 1;
 						ychecker = ycord;
+					}
+					if (movcheck){
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
 					}
 					if (bycoord == ychecker && bxcoord == xchecker){
 						bycheck = bycoord - 1;
@@ -455,13 +455,14 @@ int main() {
 						ycord = ycord + 1;
 						ychecker = ycord;
 					}
-					if (movcheck){
-						mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-					}
 					else if (tiles[level][ychecker][xchecker] == UPBRDG){
 						ycord = ycord + 1;
 						ychecker = ycord;
 					}
+					if (movcheck){
+						mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+					}
+
 					if (bycoord == ychecker && bxcoord == xchecker){
 						bycheck = bycoord + 1;
 						tiles[level][bycoord][bxcoord] = 2;
@@ -489,14 +490,14 @@ int main() {
 							xcord = xcord - 1;
 							xchecker = xcord;
 						}
-						if (movcheck){
-							tiles[level][ycord][xcord] = UPBRDG;
-							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
-						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord - 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
+						}
+						if (movcheck){
+							tiles[level][ycord][xcord] = UPBRDG;
+							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
 						}
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord - 1;
@@ -517,13 +518,13 @@ int main() {
 							xcord = xcord - 1;
 							xchecker = xcord;
 						}
-						if (movcheck){
-							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-						}
 						else if (tiles[level][ychecker][xchecker] == UPBRDG){
 							xcord = xcord - 1;
 							tiles[level][ychecker][xchecker] = BUPBRD;
 							xchecker = xcord;
+						}
+						if (movcheck){
+							mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
 						}
 						if (bycoord == ychecker && bxcoord == xchecker){
 							bxcheck = bxcoord - 1;
