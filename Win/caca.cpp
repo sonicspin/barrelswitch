@@ -1,9 +1,8 @@
 #include <iostream>
 #include <string>
-#include<Render.h>
+#include <Render.h>
 #include <vector>
-using namespace std;
-int is_valid(int checkedtile, bool& valid){
+void is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
 	case 1:
@@ -40,12 +39,11 @@ int is_valid(int checkedtile, bool& valid){
 		valid = false;
 		break;
 	}
-	return 0;
 }
-int mov(int& coord, int movcoord, int checktile,bool is_barrel){
+void mov(int& coord, int movcoord, int checktile,bool is_barrel){
 	if(is_barrel){
 	if (checktile == 1){
-		cout << "you can't do that!" << endl;
+		std::cout << "you can't do that!" << std::endl;
 	}
 	else if (checktile == 3){
 		coord = movcoord;
@@ -59,7 +57,7 @@ int mov(int& coord, int movcoord, int checktile,bool is_barrel){
 	;
 	}
 	}else{if (checktile == 1){
-		cout << "you can't do that!" << endl;
+		std::cout << "you can't do that!" << std::endl;
 	}
 	else if (checktile == 3){
 		coord = movcoord;
@@ -71,12 +69,52 @@ int mov(int& coord, int movcoord, int checktile,bool is_barrel){
 	;
 	}
 	}
+}
+int bridge(int& coord, int movcoord, int checktile, bool is_barrel, bool restrict_mov[4], bool dir[4]){
+	/*
+	dir/restrict[0] = north
+	dir/restrict[1] = east
+	dir/restrict[2] = west
+	dir/restrict[3] = south
+	*/
+	if (restrict_mov[0]){
+		if (dir[0]){
+			std::cout << "you can't do that" << std::endl;
+		}
+		else if (dir[1]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[2]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[3]){ mov(coord, movcoord, checktile, is_barrel); }
+	}
+	else if (restrict_mov[1]){
+		if (dir[0]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[1]){
+			std::cout << "you can't do that" << std::endl;
+		}
+		else if (dir[2]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[3]){ mov(coord, movcoord, checktile, is_barrel); }
+	}
+	else if (restrict_mov[2]){
+		if (dir[0]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[1]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[2]){
+			std::cout << "you can't do that" << std::endl;
+		}
+		else if (dir[3]){ mov(coord, movcoord, checktile, is_barrel); }
+	}
+	else if (restrict_mov[3]){
+		if (dir[0]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[1]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[2]){ mov(coord, movcoord, checktile, is_barrel); }
+		else if (dir[3]){
+			std::cout << "you can't do that" << std::endl;
+		}
+	}
 	return 0;
 }
 int main() {
 	int lvlamount = 4;
 	int x = 70, y=60;
-	int tiles[4][60][70] = {
+	int tiles[5][60][70] = {
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },
 				{ 1, 2, 2, 2, 2, 1, 5 },
@@ -126,7 +164,8 @@ int main() {
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 3, 2, 1, 5 },
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 7 }
-			}
+			}, {
+					{ 13 } }
 	};
 	int spawnpoint[3][2] = {
 			{ 2, 5 },
@@ -134,28 +173,39 @@ int main() {
 			{ 4, 1 }
 	};
 
-	struct dynamic_stuff{
-		int xcoord[2][4];
-		int ycoord[2][4];
+	struct coord_stuff{
+		int xcoord[2][5];
+		int ycoord[2][5];
+
+	};
+	struct dynamic_tiles{
 		bool is_active;
 		int is_activated_by;
+		coord_stuff coords;
 	}	barrelspawn, switchspawn, playerspawn, specspawn;
 	struct npc{
-		dynamic_stuff coords;
-		string text;
-	};
-	playerspawn.xcoord[0][0] = 2; playerspawn.xcoord[0][1] = 2; playerspawn.xcoord[0][2] = 4; playerspawn.xcoord[0][3] = 2; //SPAM
-	playerspawn.ycoord[0][0] = 5; playerspawn.ycoord[0][1] = 2; playerspawn.ycoord[0][2] = 1; playerspawn.ycoord[0][3] = 3; //SHARE THE SPAM
-	barrelspawn.xcoord[0][0] = 0; barrelspawn.xcoord[0][1] = 0; barrelspawn.xcoord[0][2] = 0; barrelspawn.xcoord[0][3] = 15; //SPAM THE WORLD
-	barrelspawn.ycoord[0][0] = 0; barrelspawn.ycoord[0][1] = 0; barrelspawn.ycoord[0][2] = 0; barrelspawn.ycoord[0][3] = 3;//JUST SPAM IT
-	switchspawn.xcoord[0][0] = 0; switchspawn.xcoord[0][1] = 0; switchspawn.xcoord[0][2] = 0; switchspawn.xcoord[0][3] = 7; //ALL IN SPAM
-	switchspawn.ycoord[0][0] = 0; switchspawn.ycoord[0][1] = 0; switchspawn.ycoord[0][2] = 0; switchspawn.ycoord[0][3] = 8; // 100% SPAM FREE
-	specspawn.xcoord[0][0] = 0; specspawn.xcoord[0][1] = 0; specspawn.xcoord[0][2] = 0; specspawn.xcoord[0][3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
-	specspawn.ycoord[0][0] = 0; specspawn.ycoord[0][1] = 0; specspawn.ycoord[0][2] = 0; specspawn.ycoord[0][3] = 13; //WE NEED TO GO SPAMMER
-	cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << endl;
-	cout << "welcome to my game" << endl;
-	cout << "WASD to move!" << endl;
-	string debugger;
+		coord_stuff coords;
+		std::string text[2][5];
+	}someNPC;
+	playerspawn.coords.xcoord[0][0] = 2; playerspawn.coords.xcoord[0][1] = 2; playerspawn.coords.xcoord[0][2] = 4; playerspawn.coords.xcoord[0][3] = 2; //SPAM
+	playerspawn.coords.xcoord[0][4] = 2; 
+	playerspawn.coords.ycoord[0][0] = 5; playerspawn.coords.ycoord[0][1] = 2; playerspawn.coords.ycoord[0][2] = 1; playerspawn.coords.ycoord[0][3] = 3; //SHARE THE SPAM
+	playerspawn.coords.ycoord[0][4] = 2;
+	barrelspawn.coords.xcoord[0][0] = 0; barrelspawn.coords.xcoord[0][1] = 0; barrelspawn.coords.xcoord[0][2] = 0; barrelspawn.coords.xcoord[0][3] = 15; //SPAM THE WORLD
+	barrelspawn.coords.xcoord[0][4] = 10;
+	barrelspawn.coords.ycoord[0][0] = 0; barrelspawn.coords.ycoord[0][1] = 0; barrelspawn.coords.ycoord[0][2] = 0; barrelspawn.coords.ycoord[0][3] = 3;//JUST SPAM IT
+	barrelspawn.coords.ycoord[0][4] = 2;
+	switchspawn.coords.xcoord[0][0] = 0; switchspawn.coords.xcoord[0][1] = 0; switchspawn.coords.xcoord[0][2] = 0; switchspawn.coords.xcoord[0][3] = 7; //ALL IN SPAM
+	switchspawn.coords.xcoord[0][4] = 8; switchspawn.coords.xcoord[1][4] = 4;
+	switchspawn.coords.ycoord[0][0] = 0; switchspawn.coords.ycoord[0][1] = 0; switchspawn.coords.ycoord[0][2] = 0; switchspawn.coords.ycoord[0][3] = 8; // 100% SPAM FREE
+	switchspawn.coords.ycoord[0][4] = 8; switchspawn.coords.ycoord[1][4] = 8;
+	specspawn.coords.xcoord[0][0] = 0; specspawn.coords.xcoord[0][1] = 0; specspawn.coords.xcoord[0][2] = 0; specspawn.coords.xcoord[0][3] = 15; //THAT WAS PURE SPAMMING SATISFACTION
+	specspawn.coords.xcoord[0][4] = 10;
+	specspawn.coords.ycoord[0][0] = 0; specspawn.coords.ycoord[0][1] = 0; specspawn.coords.ycoord[0][2] = 0; specspawn.coords.ycoord[0][3] = 13; //WE NEED TO GO SPAMMER
+	std::cout << "size of all levels right now is " << sizeof(tiles) << " bytes" << std::endl;
+	std::cout << "welcome to my game" << std::endl;
+	std::cout << "WASD to move!" << std::endl;
+	std::string debugger;
 	bool debug,loopcheck = false;
 	int loopcount = 0;
 	int level =0, loop = 0;
@@ -169,20 +219,21 @@ int main() {
 			level = level + 1;
 			levelcomplete = false;
 		}
-		int xcord = playerspawn.xcoord[0][level];
-		int ycord = playerspawn.ycoord[0][level];
-		int bxcoord = barrelspawn.xcoord[0][level];
-		int bycoord = barrelspawn.ycoord[0][level];
-		int sxcoord = switchspawn.xcoord[0][level];
-		int sycoord = switchspawn.ycoord[0][level];
-		int spxcoord = specspawn.xcoord[0][level];
-		int spycoord = specspawn.ycoord[0][level];
+		int xcord = playerspawn.coords.xcoord[0][level];
+		int ycord = playerspawn.coords.ycoord[0][level];
+		int bxcoord = barrelspawn.coords.xcoord[0][level];
+		int bycoord = barrelspawn.coords.ycoord[0][level];
+		int sxcoord = switchspawn.coords.xcoord[0][level];
+		int sycoord = switchspawn.coords.ycoord[0][level];
+		int spxcoord = specspawn.coords.xcoord[0][level];
+		int spycoord = specspawn.coords.ycoord[0][level];
 		specspawn.is_active = false;
 		switchspawn.is_active = false;
 		sparker = true;
 		while (sparker == true){
 			if (levelindicator == false){
-				cout << "you are in level " << level + 1 << endl;
+				SetColor(BLUE);
+				std::cout << "you are in level " << level + 1 << std::endl;
 				levelindicator = true;
 			}
 			if (bycoord == sycoord && bxcoord == sxcoord){
@@ -192,7 +243,8 @@ int main() {
 				switchspawn.is_active = false;
 			}
 			if (tiles[level][ycord][xcord] == 3){
-				cout << "you're on a staircase! write \"q\" to go up a level!" << endl;
+				SetColor(RED);
+				std::cout << "you're on a staircase! write \"q\" to go up a level!" << std::endl;
 			}
 			if (switchspawn.is_active){
 				specspawn.is_active = true;
@@ -205,13 +257,14 @@ int main() {
 			int bxcheck = bxcoord;
 			bool movcheck = true;
 			loop = 0;
+
 			//renderer
 			while (tilesparker == true){
 				if (loop == 4210){
 					SetColor(RED);
-					cout << "ERROR NO.1:";
+					std::cout << "ERROR NO.1:";
 					SetColor(TEAL);
-					cout << " infinite loop!";
+					std::cout << " infinite loop!";
 					tilesparker = false;
 				}
 				is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
@@ -221,78 +274,82 @@ int main() {
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
 							SetColor(RED);
-							cout << "O";
+							std::cout << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
 							SetColor(RED);
-							cout << "S";
+							std::cout << "S";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == sxcoord && yarraychecker == sycoord){
 							SetColor(RED);
-							cout << "O";
+							std::cout << "O";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
 							SetColor(RED);
-							cout << "E";
+							std::cout << "E";
 							xarraychecker = xarraychecker + 1;
 						}
 						else if (xarraychecker == spxcoord && yarraychecker == spycoord){
 							SetColor(GRAY);
-							cout << ",";
+							std::cout << ",";
 							xarraychecker = xarraychecker + 1;
 						}
 					}
+					else if (tiles[level][yarraychecker][xarraychecker] == ENDGAM){
+						std::cout << "Bye! And thank you for playing!";
+						goto end;
+					}
 					else if (tilecheck == false){
 						SetColor(RED);
-						cout << "ERROR NO.2:";
+						std::cout << "ERROR NO.2:";
 						SetColor(GRAY);
-						cout << "there was an error rendering this, the error tile was ";
+						std::cout << "there was an error rendering this, the error tile was ";
 						SetColor(RED);
-						cout << tiles[level][yarraychecker][xarraychecker] << endl;
+						std::cout << tiles[level][yarraychecker][xarraychecker] << std::endl;
 						tilesparker = false;
 					}
 					tilecheck = false;
 					loop++;
 					//end renderer
 			}
-				cin >> movementinput;
+				std::cin >> movementinput;
 				if(movementinput == 'p'){
 					bool annoyer = true;
 				debug = true;
 				while (debug == true){
 					if(annoyer){
-				cout << "available commands: goto, level,lvlprint,exit,loopcheck" << endl;
+				std::cout << "available commands: goto, level,lvlprint,exit,loopcheck" << std::endl;
 				annoyer = false;
 					}
-				cin >> debugger;
+				std::cin >> debugger;
 				if(debugger == "help"){
-				cout << "available commands: goto,level,lvlprint,exit,loopcheck" << endl;
-				cout << "write help <command> to see more information" << endl;
+				std::cout << "available commands: goto,level,lvlprint,exit,loopcheck" << std::endl;
+				std::cout << "write help <command> to see more information" << std::endl;
 				}else if(debugger == "lvlprint"){
                  debugrender(tiles[level], xarraychecker, yarraychecker);
 				}else if(debugger == "level"){
 					int lvlteleport;
-				cout << "enter the level you want to teleport into (close the debugger to apply)" << endl;
-				cin >> lvlteleport;
+				std::cout << "enter the level you want to teleport into (close the debugger to apply)" << std::endl;
+				std::cin >> lvlteleport;
 				level = lvlteleport;
 				sparker = false;
 				}else if (debugger == "exit"){
 					debug = false;
 				}else if(debugger == "goto"){
 				int xtele,ytele;
-				cout << "enter the x coordinate you want to teleport" << endl;
-				cin >> xtele;
-                cout << "enter the y coordinate you want to teleport" << endl;
-				cin >> ytele;
+				std::cout << "enter the x coordinate you want to teleport" << std::endl;
+				std::cin >> xtele;
+                std::cout << "enter the y coordinate you want to teleport" << std::endl;
+				std::cin >> ytele;
 				xcord = xtele;
 				ycord = ytele;
-				cout << "close the debugger to apply" << endl;
+				std::cout << "close the debugger to apply" << std::endl;
 				}
 				else if (debugger == "loopcheck"){
-					cout << "loop checking switched"<<endl;
+					std::cout << "loop checking switched"<<std::endl;
 					loopcheck = !loopcheck;
 				}
 				}
@@ -304,12 +361,12 @@ int main() {
 				}
 				else if (tiles[level][ycord][xcord] == UPBRDG){
 					if (movementinput == 'd'){
-						cout << "you can't do that!" << endl;
+						std::cout << "you can't do that!" << std::endl;
 					}
 					if (movementinput == 'w'){
 						ychecker = ychecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -335,7 +392,7 @@ int main() {
 					else if (movementinput == 's'){
 						ychecker = ychecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -361,7 +418,7 @@ int main() {
 					}
 
 					else if (movementinput == 'a'){
-						cout << "you can't do that!" << endl;
+						std::cout << "you can't do that!" << std::endl;
 					}
 				}
 				else if (tiles[level][ycord][xcord] == BUPBRD){
@@ -369,7 +426,7 @@ int main() {
 						xchecker = xchecker + 1;
 						tiles[level][ycord][xcord] = UPBRDG;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -393,11 +450,11 @@ int main() {
 						}
 					}
 					else if (movementinput == 'w'){
-						cout << "you can't do that!" << endl;
+						std::cout << "you can't do that!" << std::endl;
 						ychecker = ycord;
 					}
 					else if (movementinput == 's'){
-						cout << "you can't do that!" << endl;
+						std::cout << "you can't do that!" << std::endl;
 						ychecker = ycord;
 					}
 
@@ -405,7 +462,7 @@ int main() {
 						xchecker = xchecker - 1;
 						tiles[level][ycord][xcord] = UPBRDG;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -435,7 +492,7 @@ int main() {
 					if (movementinput == 'd'){
 						xchecker = xchecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -462,7 +519,7 @@ int main() {
 					else if (movementinput == 'w'){
 						ychecker = ychecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -487,7 +544,7 @@ int main() {
 					else if (movementinput == 's'){
 						ychecker = ychecker + 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -514,7 +571,7 @@ int main() {
 					else if (movementinput == 'a'){
 						xchecker = xchecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-							cout << "you can't do that!" << endl;
+							std::cout << "you can't do that!" << std::endl;
 							movcheck = false;
 						}
 						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
@@ -545,6 +602,7 @@ int main() {
 			}
 			//sparker layer
 		}
+	end:;
 		//oversparker layer
 	} //too many layers of indentation @_@
 //main() layer

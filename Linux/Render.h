@@ -11,6 +11,7 @@ enum TILENAME{
 	BHORBD = 10,
 	UPBRDG = 11,
 	BUPBRD = 12,
+	ENDGAM = 13
 };
 int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	bool spark = true;
