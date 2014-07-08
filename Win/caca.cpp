@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <Render.h>
-#include <vector>
 void is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
