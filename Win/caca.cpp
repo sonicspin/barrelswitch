@@ -113,8 +113,6 @@ void mov(int& coord, int movcoord, int checktile,bool is_barrel, bool on_bridge,
 	}
 }
 int main() {
-	int lvlamount = 4;
-	int x = 70, y = 60;
 	int tiles[5][60][70] = {
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },

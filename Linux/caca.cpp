@@ -208,9 +208,6 @@ int main() {
 	int loopcount = 0;
 	int level = 0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
-	/*bcoords = barrel carriers
-	  scoords = switch carriers
-	  spcoords = wall carriers */
 	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false, tilecheck = false;
 	while (oversparker == true){
 		if (levelcomplete == true){
@@ -299,7 +296,7 @@ int main() {
 				loop++;
 				//end renderer
 			}
-			bool movcheck = false;
+			bool movcheck = true;
 			std::cin >> movementinput;
 			if (movementinput == 'p'){
 				bool annoyer = true;
