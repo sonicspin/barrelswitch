@@ -219,7 +219,7 @@ int main() {
 	sf::Sprite splashimage;
 	splashimage.setTexture(splash);
 	bool debug, loopcheck = false;
-	sf::RenderWindow splashwindow(sf::VideoMode(300, 200,32), "close this and play");
+	sf::RenderWindow splashwindow(sf::VideoMode(800, 600,32), "close this and play");
 	sf::Event splashevent;
 		while (splashwindow.isOpen()){
 			while (splashwindow.pollEvent(splashevent)){
