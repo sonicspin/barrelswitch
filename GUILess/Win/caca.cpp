@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
 #include <Render.h>
-#include <SFML/System.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 void is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
@@ -212,25 +209,7 @@ int main() {
 	std::cout << "welcome to my game" << std::endl;
 	std::cout << "WASD to move!" << std::endl;
 	std::string debugger;
-	sf::Texture splash;
-	if (!splash.loadFromFile("barrelswitch.png")){
-		return EXIT_FAILURE;
-	};
-	sf::Sprite splashimage;
-	splashimage.setTexture(splash);
 	bool debug, loopcheck = false;
-	sf::RenderWindow splashwindow(sf::VideoMode(300, 200,32), "close this and play");
-	sf::Event splashevent;
-		while (splashwindow.isOpen()){
-			while (splashwindow.pollEvent(splashevent)){
-				        splashwindow.clear();
-						splashwindow.draw(splashimage);
-						splashwindow.display();
-						if (splashevent.type == sf::Event::Closed){
-							splashwindow.close();
-					}
-			}
-		}
 	int loopcount = 0;
 	int level = 0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0;
