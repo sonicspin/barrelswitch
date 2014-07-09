@@ -42,6 +42,7 @@ void is_valid(int checkedtile, bool& valid){
 void mov(int& coord, int movcoord, int checktile,bool is_barrel, bool on_bridge,int& tile){
 	if(is_barrel){
 		if (on_bridge){
+			//bridgebarrel
 			if (checktile == 1){
 				std::cout << "you can't do that!" << std::endl;
 			}
@@ -60,8 +61,10 @@ void mov(int& coord, int movcoord, int checktile,bool is_barrel, bool on_bridge,
 			else{
 				;
 			}
+			//bridgebarrel
 		}
 		else{
+			//barrel
 			if (checktile == 1){
 				std::cout << "you can't do that!" << std::endl;
 			}
@@ -77,6 +80,7 @@ void mov(int& coord, int movcoord, int checktile,bool is_barrel, bool on_bridge,
 			else{
 				;
 			}
+			//barrel
 		}
 	}
 	else{
@@ -493,6 +497,7 @@ int main() {
 					std::cout << "you can't do that!" << std::endl;
 				}
 				else{
+					//bridge
 					if (tiles[level][ycord][xcord] == BUPBRD){
 						xchecker = xchecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
@@ -521,6 +526,7 @@ int main() {
 							xcord = xcord - 1;
 							xchecker = xcord;
 						}
+						//bridge
 					}
 					else{
 						xchecker = xchecker - 1;

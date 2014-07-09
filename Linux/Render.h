@@ -1,17 +1,17 @@
 #include <iostream>
 enum TILENAME{
-	WALLTL = 1,
-	FLOORT = 2,
-	STAIRS = 3,
-	AIRSPC = 4,
-	LINBRK = 5,
-	LVLEND = 7,
-	DYNAMC = 8,
-	HORBRD = 9,
-	BHORBD = 10,
-	UPBRDG = 11,
-	BUPBRD = 12,
-	ENDGAM = 13
+	WALLTL = 1, // Wall
+	FLOORT = 2, // Floor
+	STAIRS = 3, // Stairs
+	AIRSPC = 4, // Air (or space)
+	LINBRK = 5, // Line Break ( a manual /n )
+	LVLEND = 7, // End Of Level
+	DYNAMC = 8, // Dynamic tiles (barrels, switches & triggered walls)
+	HORBRD = 9, // Horizontal bridge
+	BHORBD = 10,// and when you're below it
+	UPBRDG = 11,// vertical bridge
+	BUPBRD = 12,// also when you're below it
+	ENDGAM = 13 // doesn't work
 };
 int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	bool spark = true;
