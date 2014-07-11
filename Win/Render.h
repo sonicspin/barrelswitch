@@ -59,13 +59,13 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
    looper is for debugging
    [x|y]ins is for inspecting*/
 int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord,
-	bool& sparky, int& loop, bool looper, int& loopy, int xins, int yins
+	bool& sparky, int& loop, bool looper, int& loopy, int xins, int yins, bool make_sure_it_doesnt_break
 	){
 	bool spark = true;
 	while (spark){
 		if (looper){
 			loopy++;
-		} if (xcoord == xins && ycoord == yins && xins >= 0 && yins >= 0){
+		} if (xcoord == xins && ycoord == yins && xins != 0 && yins != 0 && make_sure_it_doesnt_break){
 			if (flooring[ycheck][xcheck] == AIRSPC){
 				AdvSetColor(DARKBLUE, DARKGRAY);
 				std::cout << "_";
@@ -166,6 +166,5 @@ int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoor
 			}
 		}
 	}
-	}
 	return 0;
-}
+	}

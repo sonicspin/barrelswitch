@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include"Render.h"
-int is_valid(int checkedtile, bool& valid){
+#include <Render.h>
+void is_valid(int checkedtile, bool& valid){
 	switch (checkedtile)
 	{
 	case 1:
@@ -38,11 +38,11 @@ int is_valid(int checkedtile, bool& valid){
 		valid = false;
 		break;
 	}
-	return 0;
 }
-void mov(int& coord, int movcoord, int checktile, bool is_barrel, bool on_bridge, int& tile){
-	if (is_barrel){
+void mov(int& coord, int movcoord, int checktile,bool is_barrel, bool on_bridge,int& tile){
+	if(is_barrel){
 		if (on_bridge){
+			//bridgebarrel
 			if (checktile == 1){
 				std::cout << "you can't do that!" << std::endl;
 			}
@@ -61,8 +61,10 @@ void mov(int& coord, int movcoord, int checktile, bool is_barrel, bool on_bridge
 			else{
 				;
 			}
+			//bridgebarrel
 		}
 		else{
+			//barrel
 			if (checktile == 1){
 				std::cout << "you can't do that!" << std::endl;
 			}
@@ -78,6 +80,7 @@ void mov(int& coord, int movcoord, int checktile, bool is_barrel, bool on_bridge
 			else{
 				;
 			}
+			//barrel
 		}
 	}
 	else{
@@ -114,7 +117,7 @@ void mov(int& coord, int movcoord, int checktile, bool is_barrel, bool on_bridge
 	}
 }
 int main() {
-	int	tiles[5][60][70] = {
+	int tiles[5][60][70] = {
 			{
 				{ 1, 1, 1, 1, 1, 1, 5 },
 				{ 1, 2, 2, 2, 2, 1, 5 },
@@ -164,12 +167,8 @@ int main() {
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 3, 2, 1, 5 },
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 2, 2, 2, 2, 2, 1, 5 },
 					{ 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 1, 1, 1, 1, 1, 7 }
-			}, { { 13 } }
-	};
-	int spawnpoint[3][2] = {
-			{ 2, 5 },
-			{ 2, 2 },
-			{ 4, 1 }
+			}, {
+					{ 13 } }
 	};
 	struct coord_stuff{
 		int xcoord[2][5];
@@ -226,7 +225,11 @@ int main() {
 		switchspawn.is_active = false;
 		sparker = true;
 		while (sparker == true){
+			if (bxcoord == spxcoord && bycoord == spycoord){
+				std::cout << "YOU CROSSED THE STREAMS, YOU MORON" << std::endl;
+			}
 			if (levelindicator == false){
+				SetColor(BLUE);
 				std::cout << "you are in level " << level + 1 << std::endl;
 				levelindicator = true;
 			}
@@ -237,6 +240,7 @@ int main() {
 				switchspawn.is_active = false;
 			}
 			if (tiles[level][ycord][xcord] == 3){
+				SetColor(RED);
 				std::cout << "you're on a staircase! write \"q\" to go up a level!" << std::endl;
 			}
 			if (switchspawn.is_active){
@@ -248,37 +252,46 @@ int main() {
 			int ychecker = ycord;
 			int bycheck = bycoord;
 			int bxcheck = bxcoord;
-			//renderer
+			bool movcheck = true;
 			loop = 0;
+
+			//renderer
 			while (tilesparker == true){
 				if (loop == 4210){
-					std::cout << "\033[0;31;40m" << "ERROR NO.1:";
-					std::cout << "\033[0;36;40m" << "infinite loop!";
+					SetColor(RED);
+					std::cout << "ERROR NO.1:";
+					SetColor(TEAL);
+					std::cout << " infinite loop!";
 					tilesparker = false;
 				}
 				is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
 				if (tilecheck == true){
-					render(tiles[level], xarraychecker, yarraychecker, xcord, ycord,tilesparker, loop, loopcheck, loopcount);
+					render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop, loopcheck, loopcount);
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){
-						std::cout << "\033[0;31;40m" << "O";
+						SetColor(RED);
+						std::cout << "O";
 						xarraychecker = xarraychecker + 1;
 					}
 					else if (xarraychecker == sxcoord && yarraychecker == sycoord && switchspawn.is_active == false){
-						std::cout << "\033[0;31;40m" << "S";
+						SetColor(RED);
+						std::cout << "S";
 						xarraychecker = xarraychecker + 1;
 					}
 					else if (xarraychecker == sxcoord && yarraychecker == sycoord){
-						std::cout << "\033[0;31;40m" << "O";
+						SetColor(RED);
+						std::cout << "O";
 						xarraychecker = xarraychecker + 1;
 					}
 					else if (xarraychecker == spxcoord && yarraychecker == spycoord && specspawn.is_active == false){
-						std::cout << "\033[0;31;40m" << "E";
+						SetColor(RED);
+						std::cout << "E";
 						xarraychecker = xarraychecker + 1;
 					}
 					else if (xarraychecker == spxcoord && yarraychecker == spycoord){
-						std::cout << "\033[0;37;40m" << ",";
+						SetColor(GRAY);
+						std::cout << ",";
 						xarraychecker = xarraychecker + 1;
 					}
 				}
@@ -287,16 +300,18 @@ int main() {
 					goto end;
 				}
 				else if (tilecheck == false){
-					std::cout << "\033[0;31;40m" << "ERROR NO.2:";
-					std::cout << "\033[0;37;40m" << "there was an error rendering this, the error tile was ";
-					std::cout << "\033[0;31;40m" << tiles[level][yarraychecker][xarraychecker] << std::endl;
+					SetColor(RED);
+					std::cout << "ERROR NO.2:";
+					SetColor(GRAY);
+					std::cout << "there was an error rendering this, the error tile was ";
+					SetColor(RED);
+					std::cout << tiles[level][yarraychecker][xarraychecker] << std::endl;
 					tilesparker = false;
 				}
 				tilecheck = false;
 				loop++;
 				//end renderer
 			}
-			bool movcheck = true;
 			std::cin >> movementinput;
 			if (movementinput == 'p'){
 				bool annoyer = true;
@@ -462,7 +477,7 @@ int main() {
 					if (movcheck){
 						mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
 					}
-
+					
 					if (bycoord == ychecker && bxcoord == xchecker){
 						bycheck = bycoord + 1;
 						tiles[level][bycoord][bxcoord] = 2;
@@ -479,6 +494,7 @@ int main() {
 					std::cout << "you can't do that!" << std::endl;
 				}
 				else{
+					//bridge
 					if (tiles[level][ycord][xcord] == BUPBRD){
 						xchecker = xchecker - 1;
 						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
@@ -507,6 +523,7 @@ int main() {
 							xcord = xcord - 1;
 							xchecker = xcord;
 						}
+						//bridge
 					}
 					else{
 						xchecker = xchecker - 1;
@@ -541,3 +558,5 @@ int main() {
 	}
 end:;
 }
+//too many layers of indentation @_@
+//main() layer

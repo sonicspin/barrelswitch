@@ -173,12 +173,6 @@ int main() {
 			}, {
 					{ 13 } }
 	};
-	int spawnpoint[3][2] = {
-			{ 2, 5 },
-			{ 2, 2 },
-			{ 4, 1 }
-	};
-
 	struct coord_stuff{
 		int xcoord[2][5];
 		int ycoord[2][5];
@@ -258,12 +252,16 @@ int main() {
 		int sxcoord = switchspawn.coords.xcoord[0][level];
 		int sycoord = switchspawn.coords.ycoord[0][level];
 		int spxcoord = specspawn.coords.xcoord[0][level];
+		inspectx = xcord;
+		inspecty = ycord;
 		int spycoord = specspawn.coords.ycoord[0][level];
 		specspawn.is_active = false;
 		switchspawn.is_active = false;
 		sparker = true;
 		while (sparker == true){
-			while (gamewindow.pollEvent(gameEvent)){
+			    if (bxcoord == spxcoord && bycoord == spycoord && bxcoord != 0){
+					std::cout << "YOU CROSSED THE STREAMS, YOU MORON" << std::endl;
+				}
 				if (!inspector){
 					inspectx = xcord;
 					inspecty = ycord;
@@ -306,7 +304,8 @@ int main() {
 					}
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
 					if (tilecheck == true){
-						render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, tilesparker, loop, loopcheck, loopcount);
+						render(tiles[level], xarraychecker, yarraychecker,
+							xcord, ycord, tilesparker, loop, loopcheck, loopcount,inspectx,inspecty,inspector);
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -595,7 +594,6 @@ int main() {
 						}
 					}
 				}
-			}
 		}
 end:;
 }
