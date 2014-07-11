@@ -240,26 +240,27 @@ int main() {
 	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false, tilecheck = false, inspector = false;
 	sf::Window gamewindow(sf::VideoMode(300, 256, 32), "input window");
 	while (gamewindow.isOpen()){
-		sf::Event gameEvent();
-		if (levelcomplete == true){
-			level = level + 1;
-			levelcomplete = false;
-		}
-		int xcord = playerspawn.coords.xcoord[0][level];
-		int ycord = playerspawn.coords.ycoord[0][level];
-		int bxcoord = barrelspawn.coords.xcoord[0][level];
-		int bycoord = barrelspawn.coords.ycoord[0][level];
-		int sxcoord = switchspawn.coords.xcoord[0][level];
-		int sycoord = switchspawn.coords.ycoord[0][level];
-		int spxcoord = specspawn.coords.xcoord[0][level];
-		inspectx = xcord;
-		inspecty = ycord;
-		int spycoord = specspawn.coords.ycoord[0][level];
-		specspawn.is_active = false;
-		switchspawn.is_active = false;
-		sparker = true;
-		while (sparker == true){
-			    if (bxcoord == spxcoord && bycoord == spycoord && bxcoord != 0){
+		sf::Event gameEvent;
+		while (gamewindow.pollEvent(gameEvent)){
+			if (levelcomplete == true){
+				level = level + 1;
+				levelcomplete = false;
+			}
+			int xcord = playerspawn.coords.xcoord[0][level];
+			int ycord = playerspawn.coords.ycoord[0][level];
+			int bxcoord = barrelspawn.coords.xcoord[0][level];
+			int bycoord = barrelspawn.coords.ycoord[0][level];
+			int sxcoord = switchspawn.coords.xcoord[0][level];
+			int sycoord = switchspawn.coords.ycoord[0][level];
+			int spxcoord = specspawn.coords.xcoord[0][level];
+			inspectx = xcord;
+			inspecty = ycord;
+			int spycoord = specspawn.coords.ycoord[0][level];
+			specspawn.is_active = false;
+			switchspawn.is_active = false;
+			sparker = true;
+			while (sparker == true){
+				if (bxcoord == spxcoord && bycoord == spycoord && bxcoord != 0){
 					std::cout << "YOU CROSSED THE STREAMS, YOU MORON" << std::endl;
 				}
 				if (!inspector){
@@ -305,7 +306,7 @@ int main() {
 					is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
 					if (tilecheck == true){
 						render(tiles[level], xarraychecker, yarraychecker,
-							xcord, ycord, tilesparker, loop, loopcheck, loopcount,inspectx,inspecty,inspector);
+							xcord, ycord, tilesparker, loop, loopcheck, loopcount, inspectx, inspecty, inspector);
 					}
 					else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 						if (xarraychecker == bxcoord && yarraychecker == bycoord){
@@ -351,250 +352,257 @@ int main() {
 					loop++;
 					//end renderer
 				}
+				switch (gameEvent.type){
+				case sf::Event::Closed:
+					gamewindow.close;
+						break;
+					
+				}
 				std::cin >> movementinput;
-					if (movementinput == 'p'){
-						bool annoyer = true;
-						debug = true;
-						while (debug == true){
-							if (annoyer){
-								std::cout << "available commands: goto, level,lvlprint,exit,loopcheck" << std::endl;
-								annoyer = false;
-							}
-							std::cin >> debugger;
-							if (debugger == "help"){
-								std::cout << "available commands: goto,level,lvlprint,exit,loopcheck" << std::endl;
-								std::cout << "write help <command> to see more information" << std::endl;
-							}
-							else if (debugger == "lvlprint"){
-								debugrender(tiles[level], xarraychecker, yarraychecker);
-							}
-							else if (debugger == "level"){
-								int lvlteleport;
-								std::cout << "enter the level you want to teleport into (close the debugger to apply)" << std::endl;
-								std::cin >> lvlteleport;
-								level = lvlteleport;
-								sparker = false;
-							}
-							else if (debugger == "exit"){
-								debug = false;
-							}
-							else if (debugger == "goto"){
-								int xtele, ytele;
-								std::cout << "enter the x coordinate you want to teleport" << std::endl;
-								std::cin >> xtele;
-								std::cout << "enter the y coordinate you want to teleport" << std::endl;
-								std::cin >> ytele;
-								xcord = xtele;
-								ycord = ytele;
-								std::cout << "close the debugger to apply" << std::endl;
-							}
-							else if (debugger == "loopcheck"){
-								std::cout << "loop checking switched" << std::endl;
-								loopcheck = !loopcheck;
-							}
+				if (movementinput == 'p'){
+					bool annoyer = true;
+					debug = true;
+					while (debug == true){
+						if (annoyer){
+							std::cout << "available commands: goto, level,lvlprint,exit,loopcheck" << std::endl;
+							annoyer = false;
+						}
+						std::cin >> debugger;
+						if (debugger == "help"){
+							std::cout << "available commands: goto,level,lvlprint,exit,loopcheck" << std::endl;
+							std::cout << "write help <command> to see more information" << std::endl;
+						}
+						else if (debugger == "lvlprint"){
+							debugrender(tiles[level], xarraychecker, yarraychecker);
+						}
+						else if (debugger == "level"){
+							int lvlteleport;
+							std::cout << "enter the level you want to teleport into (close the debugger to apply)" << std::endl;
+							std::cin >> lvlteleport;
+							level = lvlteleport;
+							sparker = false;
+						}
+						else if (debugger == "exit"){
+							debug = false;
+						}
+						else if (debugger == "goto"){
+							int xtele, ytele;
+							std::cout << "enter the x coordinate you want to teleport" << std::endl;
+							std::cin >> xtele;
+							std::cout << "enter the y coordinate you want to teleport" << std::endl;
+							std::cin >> ytele;
+							xcord = xtele;
+							ycord = ytele;
+							std::cout << "close the debugger to apply" << std::endl;
+						}
+						else if (debugger == "loopcheck"){
+							std::cout << "loop checking switched" << std::endl;
+							loopcheck = !loopcheck;
 						}
 					}
-					else if (tiles[level][ycord][xcord] == 3 && movementinput == 'q'){
-						levelcomplete = true;
-						levelindicator = false;
-						sparker = false;
+				}
+				else if (tiles[level][ycord][xcord] == 3 && movementinput == 'q'){
+					levelcomplete = true;
+					levelindicator = false;
+					sparker = false;
+				}
+				else if (movementinput == 'd'){
+					if (tiles[level][ycord][xcord] == UPBRDG){
+						std::cout << "you can't do that!" << std::endl;
 					}
-					else if (movementinput == 'd'){
-						if (tiles[level][ycord][xcord] == UPBRDG){
-							std::cout << "you can't do that!" << std::endl;
-						}
-						else{
-							if (tiles[level][ycord][xcord] == BUPBRD){
-								xchecker = xchecker + 1;
-								if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-									std::cout << "you can't do that!" << std::endl;
-									movcheck = false;
-								}
-								else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-									tiles[level][ycord][xcord] = UPBRDG;
-									xcord = xcord + 1;
-									xchecker = xcord;
-								}
-								else if (tiles[level][ychecker][xchecker] == UPBRDG){
-									tiles[level][ycord][xcord] = UPBRDG;
-									xcord = xcord + 1;
-									tiles[level][ychecker][xchecker] = BUPBRD;
-									xchecker = xcord;
-								}
-								if (movcheck){
-									tiles[level][ycord][xcord] = UPBRDG;
-									mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
-								}
-								if (bycoord == ychecker && bxcoord == xchecker){
-									bxcheck = bxcoord + 1;
-									tiles[level][bycoord][bxcoord] = 2;
-									mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, true, tiles[level][bycoord][bxcoord]);
-									tiles[level][bycheck][bxcheck] = 8;
-									tiles[level][ycord][xcord] = UPBRDG;
-									xcord = xcord + 1;
-									xchecker = xcord;
-								}
-							}
-							else{
-								xchecker = xchecker + 1;
-								if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-									std::cout << "you can't do that!" << std::endl;
-									movcheck = false;
-								}
-								else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-									xcord = xcord + 1;
-									xchecker = xcord;
-								}
-								else if (tiles[level][ychecker][xchecker] == UPBRDG){
-									xcord = xcord + 1;
-									tiles[level][ychecker][xchecker] = BUPBRD;
-									xchecker = xcord;
-								}
-								if (movcheck){
-									mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-								}
-								if (bycoord == ychecker && bxcoord == xchecker){
-									bxcheck = bxcoord + 1;
-									tiles[level][bycoord][bxcoord] = 2;
-									mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][bycoord][bxcoord]);
-									tiles[level][bycheck][bxcheck] = 8;
-									xcord = xcord + 1;
-									xchecker = xcord;
-								}
-							}
-						}
-					}
-					else if (movementinput == 'w'){
+					else{
 						if (tiles[level][ycord][xcord] == BUPBRD){
-							std::cout << "you can't do that!" << std::endl;
-						}
-						else{
-							ychecker = ychecker - 1;
+							xchecker = xchecker + 1;
 							if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
 								std::cout << "you can't do that!" << std::endl;
 								movcheck = false;
 							}
 							else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-								ycord = ycord - 1;
-								ychecker = ycord;
+								tiles[level][ycord][xcord] = UPBRDG;
+								xcord = xcord + 1;
+								xchecker = xcord;
 							}
 							else if (tiles[level][ychecker][xchecker] == UPBRDG){
-								ycord = ycord - 1;
-								ychecker = ycord;
+								tiles[level][ycord][xcord] = UPBRDG;
+								xcord = xcord + 1;
+								tiles[level][ychecker][xchecker] = BUPBRD;
+								xchecker = xcord;
 							}
 							if (movcheck){
-								mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+								tiles[level][ycord][xcord] = UPBRDG;
+								mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
 							}
 							if (bycoord == ychecker && bxcoord == xchecker){
-								bycheck = bycoord - 1;
+								bxcheck = bxcoord + 1;
 								tiles[level][bycoord][bxcoord] = 2;
-								mov(bycoord, bycheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][ycord][xcord]);
+								mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, true, tiles[level][bycoord][bxcoord]);
 								tiles[level][bycheck][bxcheck] = 8;
-								ycord = ycord - 1;
-								ychecker = ycord;
+								tiles[level][ycord][xcord] = UPBRDG;
+								xcord = xcord + 1;
+								xchecker = xcord;
 							}
 						}
-					}
-					else if (movementinput == 's'){
-						if (tiles[level][ycord][xcord] == BUPBRD){
-							std::cout << "you can't do that!" << std::endl;
-						}
 						else{
-							ychecker = ychecker + 1;
+							xchecker = xchecker + 1;
 							if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
 								std::cout << "you can't do that!" << std::endl;
 								movcheck = false;
 							}
 							else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-								ycord = ycord + 1;
-								ychecker = ycord;
+								xcord = xcord + 1;
+								xchecker = xcord;
 							}
 							else if (tiles[level][ychecker][xchecker] == UPBRDG){
-								ycord = ycord + 1;
-								ychecker = ycord;
+								xcord = xcord + 1;
+								tiles[level][ychecker][xchecker] = BUPBRD;
+								xchecker = xcord;
 							}
 							if (movcheck){
-								mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+								mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
 							}
-
 							if (bycoord == ychecker && bxcoord == xchecker){
-								bycheck = bycoord + 1;
+								bxcheck = bxcoord + 1;
 								tiles[level][bycoord][bxcoord] = 2;
-								mov(bycoord, bycheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][ycord][xcord]);
+								mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][bycoord][bxcoord]);
 								tiles[level][bycheck][bxcheck] = 8;
-								ycord = ycord + 1;
-								ychecker = ycord;
-							}
-
-						}
-					}
-					else if (movementinput == 'a'){
-						if (tiles[level][ycord][xcord] == UPBRDG){
-							std::cout << "you can't do that!" << std::endl;
-						}
-						else{
-							//bridge
-							if (tiles[level][ycord][xcord] == BUPBRD){
-								xchecker = xchecker - 1;
-								if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-									std::cout << "you can't do that!" << std::endl;
-									movcheck = false;
-								}
-								else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-									tiles[level][ycord][xcord] = UPBRDG;
-									xcord = xcord - 1;
-									xchecker = xcord;
-								}
-								else if (tiles[level][ychecker][xchecker] == UPBRDG){
-									xcord = xcord - 1;
-									tiles[level][ychecker][xchecker] = BUPBRD;
-									xchecker = xcord;
-								}
-								if (movcheck){
-									tiles[level][ycord][xcord] = UPBRDG;
-									mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
-								}
-								if (bycoord == ychecker && bxcoord == xchecker){
-									bxcheck = bxcoord - 1;
-									tiles[level][bycoord][bxcoord] = 2;
-									mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, true, tiles[level][bycoord][bxcoord]);
-									tiles[level][bycheck][bxcheck] = 8;
-									xcord = xcord - 1;
-									xchecker = xcord;
-								}
-								//bridge
-							}
-							else{
-								xchecker = xchecker - 1;
-								if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
-									std::cout << "you can't do that!" << std::endl;
-									movcheck = false;
-								}
-								else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
-									xcord = xcord - 1;
-									xchecker = xcord;
-								}
-								else if (tiles[level][ychecker][xchecker] == UPBRDG){
-									xcord = xcord - 1;
-									tiles[level][ychecker][xchecker] = BUPBRD;
-									xchecker = xcord;
-								}
-								if (movcheck){
-									mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
-								}
-								if (bycoord == ychecker && bxcoord == xchecker){
-									bxcheck = bxcoord - 1;
-									tiles[level][bycoord][bxcoord] = 2;
-									mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][bycoord][bxcoord]);
-									tiles[level][bycheck][bxcheck] = 8;
-									xcord = xcord - 1;
-									xchecker = xcord;
-								}
+								xcord = xcord + 1;
+								xchecker = xcord;
 							}
 						}
 					}
 				}
+				else if (movementinput == 'w'){
+					if (tiles[level][ycord][xcord] == BUPBRD){
+						std::cout << "you can't do that!" << std::endl;
+					}
+					else{
+						ychecker = ychecker - 1;
+						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
+							std::cout << "you can't do that!" << std::endl;
+							movcheck = false;
+						}
+						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
+							ycord = ycord - 1;
+							ychecker = ycord;
+						}
+						else if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord - 1;
+							ychecker = ycord;
+						}
+						if (movcheck){
+							mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+						}
+						if (bycoord == ychecker && bxcoord == xchecker){
+							bycheck = bycoord - 1;
+							tiles[level][bycoord][bxcoord] = 2;
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][ycord][xcord]);
+							tiles[level][bycheck][bxcheck] = 8;
+							ycord = ycord - 1;
+							ychecker = ycord;
+						}
+					}
+				}
+				else if (movementinput == 's'){
+					if (tiles[level][ycord][xcord] == BUPBRD){
+						std::cout << "you can't do that!" << std::endl;
+					}
+					else{
+						ychecker = ychecker + 1;
+						if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
+							std::cout << "you can't do that!" << std::endl;
+							movcheck = false;
+						}
+						else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
+							ycord = ycord + 1;
+							ychecker = ycord;
+						}
+						else if (tiles[level][ychecker][xchecker] == UPBRDG){
+							ycord = ycord + 1;
+							ychecker = ycord;
+						}
+						if (movcheck){
+							mov(ycord, ychecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+						}
+
+						if (bycoord == ychecker && bxcoord == xchecker){
+							bycheck = bycoord + 1;
+							tiles[level][bycoord][bxcoord] = 2;
+							mov(bycoord, bycheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][ycord][xcord]);
+							tiles[level][bycheck][bxcheck] = 8;
+							ycord = ycord + 1;
+							ychecker = ycord;
+						}
+
+					}
+				}
+				else if (movementinput == 'a'){
+					if (tiles[level][ycord][xcord] == UPBRDG){
+						std::cout << "you can't do that!" << std::endl;
+					}
+					else{
+						//bridge
+						if (tiles[level][ycord][xcord] == BUPBRD){
+							xchecker = xchecker - 1;
+							if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
+								std::cout << "you can't do that!" << std::endl;
+								movcheck = false;
+							}
+							else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
+								tiles[level][ycord][xcord] = UPBRDG;
+								xcord = xcord - 1;
+								xchecker = xcord;
+							}
+							else if (tiles[level][ychecker][xchecker] == UPBRDG){
+								xcord = xcord - 1;
+								tiles[level][ychecker][xchecker] = BUPBRD;
+								xchecker = xcord;
+							}
+							if (movcheck){
+								tiles[level][ycord][xcord] = UPBRDG;
+								mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, true, tiles[level][ycord][xcord]);
+							}
+							if (bycoord == ychecker && bxcoord == xchecker){
+								bxcheck = bxcoord - 1;
+								tiles[level][bycoord][bxcoord] = 2;
+								mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, true, tiles[level][bycoord][bxcoord]);
+								tiles[level][bycheck][bxcheck] = 8;
+								xcord = xcord - 1;
+								xchecker = xcord;
+							}
+							//bridge
+						}
+						else{
+							xchecker = xchecker - 1;
+							if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == false){
+								std::cout << "you can't do that!" << std::endl;
+								movcheck = false;
+							}
+							else if ((spycoord == ychecker && spxcoord == xchecker) && specspawn.is_active == true){
+								xcord = xcord - 1;
+								xchecker = xcord;
+							}
+							else if (tiles[level][ychecker][xchecker] == UPBRDG){
+								xcord = xcord - 1;
+								tiles[level][ychecker][xchecker] = BUPBRD;
+								xchecker = xcord;
+							}
+							if (movcheck){
+								mov(xcord, xchecker, tiles[level][ychecker][xchecker], false, false, tiles[level][ycord][xcord]);
+							}
+							if (bycoord == ychecker && bxcoord == xchecker){
+								bxcheck = bxcoord - 1;
+								tiles[level][bycoord][bxcoord] = 2;
+								mov(bxcoord, bxcheck, tiles[level][bycheck][bxcheck], true, false, tiles[level][bycoord][bxcoord]);
+								tiles[level][bycheck][bxcheck] = 8;
+								xcord = xcord - 1;
+								xchecker = xcord;
+							}
+						}
+					}
+				}
+			}
 		}
+	}
 end:;
 }
 //too many layers of indentation @_@
