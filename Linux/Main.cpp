@@ -258,7 +258,7 @@ int main() {
 				}
 				is_valid(tiles[level][yarraychecker][xarraychecker], tilecheck);
 				if (tilecheck == true){
-					render(tiles[level], xarraychecker, yarraychecker, xcord, ycord, level, tilesparker, loop, loopcheck, loopcount);
+					render(tiles[level], xarraychecker, yarraychecker, xcord, ycord,tilesparker, loop, loopcheck, loopcount);
 				}
 				else if (tiles[level][yarraychecker][xarraychecker] == DYNAMC){
 					if (xarraychecker == bxcoord && yarraychecker == bycoord){

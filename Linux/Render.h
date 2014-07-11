@@ -34,7 +34,7 @@ int debugrender(int arr[60][70], int& xdcheck, int& ydcheck){
 	}
 	return 0;
 }
-int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, int lvl, bool& sparky, int& loop,bool looper,int& loopy){
+int render(int flooring[60][70], int& xcheck, int& ycheck, int xcoord, int ycoord, bool& sparky, int& loop,bool looper,int& loopy){
 	bool spark = true;
 	if (looper){
 		loopy++;
