@@ -222,7 +222,7 @@ int main() {
 	spriteArrow.setTexture(arrow);
 	spriteArrow.setPosition(256, 106);
 	bool debug, loopcheck = false;
-	sf::RenderWindow splashwindow(sf::VideoMode(800, 600, 32), "close this and play", (sf::Style::Close | sf::Style::Titlebar));
+	sf::RenderWindow splashwindow(sf::VideoMode(800, 600,24), "close this and play", (sf::Style::Close | sf::Style::Titlebar));
 	sf::Event splashevent;
 	while (splashwindow.isOpen()){
 		while (splashwindow.pollEvent(splashevent)){
@@ -238,7 +238,7 @@ int main() {
 	int level = 0, loop = 0;
 	int xarraychecker = 0, yarraychecker = 0,inspectx, inspecty;
 	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false, tilecheck = false, inspector = false;
-	sf::Window gamewindow(sf::VideoMode(300, 256, 32), "input window");
+	sf::RenderWindow gamewindow(sf::VideoMode(300, 256, 32), "input window");
 	while (gamewindow.isOpen()){
 		sf::Event gameEvent;
 		while (gamewindow.pollEvent(gameEvent)){
@@ -260,6 +260,9 @@ int main() {
 			switchspawn.is_active = false;
 			sparker = true;
 			while (sparker == true){
+				gamewindow.clear(sf::Color::Black);
+				gamewindow.draw(spriteAtchan);
+				gamewindow.display();
 				if (bxcoord == spxcoord && bycoord == spycoord && bxcoord != 0){
 					std::cout << "YOU CROSSED THE STREAMS, YOU MORON" << std::endl;
 				}
@@ -354,9 +357,8 @@ int main() {
 				}
 				switch (gameEvent.type){
 				case sf::Event::Closed:
-					gamewindow.close;
+					gamewindow.close();
 						break;
-					
 				}
 				std::cin >> movementinput;
 				if (movementinput == 'p'){
