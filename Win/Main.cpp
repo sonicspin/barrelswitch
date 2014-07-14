@@ -1,3 +1,11 @@
+#ifdef SFML_STATIC
+#pragma comment(lib, "glew.lib")
+#pragma comment(lib, "freetype.lib")
+#pragma comment(lib, "jpeg.lib")
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "gdi32.lib")  
+#endif // SFML_STATIC
 #include <iostream>
 #include <string>
 #include <Render.h>
@@ -225,7 +233,6 @@ int main() {
 	sf::RenderWindow splashwindow(sf::VideoMode(800, 600,24), "close this and play", (sf::Style::Close | sf::Style::Titlebar));
 	sf::Event splashevent;
 	while (splashwindow.isOpen()){
-		while (splashwindow.pollEvent(splashevent)){
 			splashwindow.clear();
 			splashwindow.draw(splashimage);
 			splashwindow.display();
@@ -239,7 +246,7 @@ int main() {
 	int xarraychecker = 0, yarraychecker = 0,inspectx, inspecty;
 	bool sparker, levelindicator = false, oversparker = true, levelcomplete = false, tilecheck = false, inspector = false;
 	sf::RenderWindow gamewindow(sf::VideoMode(300, 256, 32), "input window");
-	while (gamewindow.isOpen()){
+	while(gamewindow.isOpen()){
 		sf::Event gameEvent;
 		while (gamewindow.pollEvent(gameEvent)){
 			if (levelcomplete == true){
@@ -355,11 +362,7 @@ int main() {
 					loop++;
 					//end renderer
 				}
-				switch (gameEvent.type){
-				case sf::Event::Closed:
-					gamewindow.close();
-						break;
-				}
+				while (splashwindow.pollEvent(splashevent)){
 				std::cin >> movementinput;
 				if (movementinput == 'p'){
 					bool annoyer = true;
